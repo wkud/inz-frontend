@@ -1,0 +1,19 @@
+.parent {
+  text-align: center;
+  background-color: #282c34;
+  color: white;
+  min-height: 100vh;
+}
+.mid-element {
+  min-height: 30vh;
+  min-width: 50vh;
+}
+.bg-highlight{
+  background-color: #30353f;
+}
+.big-font {
+  font-size: calc(10px + 2vmin);
+}
+.link {
+  color: #61dafb;
+}

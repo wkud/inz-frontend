@@ -2,7 +2,7 @@ import React from 'react';
 
 const Credits = (className) => {
   return (
-    <div className='small-font'>
+    <div className='small-lead-font'>
       Credits: author Wojciech Kud
       <br />
       website icon made by{' '}

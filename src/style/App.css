@@ -4,6 +4,17 @@
   color: white;
   min-height: 100vh;
 }
+.auth-section {
+  height: calc(8 * 1.25rem);
+  width: 40vw;
+  max-width: 40vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.button-font{
+  font-size: 0.875
+}
 .bg-highlight {
   background-color: #30353f;
 }
@@ -17,7 +28,7 @@
 .link {
   color: #61dafb;
 }
-.small-font {
+.small-lead-font {
   font-size: 0.8rem;
   font-weight: 300;
 }

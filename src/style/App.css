@@ -1,6 +1,5 @@
 .parent {
   text-align: center;
-  background-color: #282c34;
   color: white;
   min-height: 100vh;
 }
@@ -20,6 +19,7 @@
 }
 .mid-font {
   font-size: 1.25rem;
+  font-weight: 300;
 }
 .mid-font-img {
   width: 1.25rem;

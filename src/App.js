@@ -10,6 +10,8 @@ function App() {
   return (
       <div className='parent bg-light d-flex flex-column justify-content-between'>
         <MyNavbar logo={logo}/>
+        <p className='lead'>Welcome to the Penny.<br/>
+        Sign in to continue or sign up if you don't have an account yet.</p>
         <Home />
         <Credits />
       </div>

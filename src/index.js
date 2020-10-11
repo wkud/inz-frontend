@@ -1,7 +1,9 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './style/index.css';
 import App from './App';
+import "bootswatch/dist/cyborg/bootstrap.min.css";
+import './style/index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 ReactDOM.render(

@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { UserContext } from '../../context/user/UserContext';
 
-const Login = ({ xs }) => {
+const Login = () => {
+  const [,,,login] = useContext(UserContext);
+
+  const submit = () => login();
   return (
     <>
       <Form className='d-flex flex-column justify-content-between align-content-start '>
@@ -17,7 +21,12 @@ const Login = ({ xs }) => {
           <Form.Label>Password</Form.Label>
           <Form.Control type='password' placeholder='Password' />
         </Form.Group>
-        <Button variant='primary' type='submit' className='align-self-center align-self-sm-end mr-sm-5 '>
+        <Button
+          variant='primary'
+          // type='submit' //todo
+          className='align-self-center align-self-sm-end mr-sm-5'
+          onClick={submit}
+        >
           Submit
         </Button>
       </Form>

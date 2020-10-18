@@ -18,8 +18,6 @@ const Register = () => {
       e.target.checkValidity() &&
       credentials.password === credentials.confirmPassword
     ) {
-      console.log(credentials);
-
       register(credentials.email, credentials.password);
 
       setCredentials(credentialsInitialState);

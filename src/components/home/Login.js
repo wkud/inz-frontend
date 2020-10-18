@@ -14,8 +14,6 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (e.target.checkValidity()) {
-      console.log(credentials);
-
       login(credentials.email, credentials.password); //TODO validate data
 
       setCredentials(credentialsInitialState);

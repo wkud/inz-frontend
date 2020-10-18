@@ -37,7 +37,7 @@ export const UserProvider = (props) => {
       .then((res) => {
         setUser({ ...user, loading: false, email: email });
         localStorage.setItem('token', res.data.access_token);
-        console.log(localStorage.getItem('token'));
+        // console.log(localStorage.getItem('token'));
       })
       .catch((err) => {
         //TODO catch backend errors

@@ -16,7 +16,7 @@ const MyNavbar = ({ logo }) => {
         <Nav.Link href='#features'>Features</Nav.Link>
         <Nav.Link href='#pricing'>Pricing</Nav.Link>
       </Nav>
-      {user.id !== -1 && (
+      {user.email && (
         <Navbar.Collapse className='justify-content-end'>
           <Navbar.Text>
             Signed in as: <a href='#login'>{user.email}</a>

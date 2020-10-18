@@ -5,34 +5,48 @@ export const UserContext = createContext();
 
 export const UserProvider = (props) => {
   const [user, setUser] = useState({
-    email: 'bob@nice.org',
-    id: -1,
+    email: null,
     loading: false,
   });
 
-  const register = async (email, password, confirmPasword) => {
+  const register = (email, password) => {
     setUser({ ...user, loading: true });
 
-    const res = await inzApi().post('register', {
-      email: 'name3@domain.com', //todo replace hardcode with actual data
-      password: 'pass',
-    });
-
-    setUser({ ...user, loading: false, id: res.data.id });
+    inzApi()
+      .post('register', {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        setUser({ ...user, loading: false });
+      })
+      .catch((err) => {
+        //TODO catch backend errors
+        console.log(err);
+      });
   };
 
-  const login = async (email, password) => {
+  const login = (email, password) => {
     setUser({ ...user, loading: true });
 
-    const res = await inzApi().post('login', {
-      email: 'name3@domain.com', //todo replace hardcode with actual data
-      password: 'pass',
-    });
+    inzApi()
+      .post('login', {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        setUser({ ...user, loading: false, email: email });
+        localStorage.setItem('token', res.data.access_token);
+        console.log(localStorage.getItem('token'));
+      })
+      .catch((err) => {
+        //TODO catch backend errors
+        console.log(err);
+        localStorage.setItem('token', null);
+        setUser({ ...user, loading: false, email: null });
+      });
 
-    setUser({ ...user, loading: false });
-    localStorage.setItem('token', res.data.access_token);
-
-    getIdentity();
+    // getIdentity();
   };
 
   const getIdentity = async () => {
@@ -43,7 +57,6 @@ export const UserProvider = (props) => {
     setUser({
       ...user,
       loading: false,
-      id: res.data.id,
       email: res.data.email,
     });
   };

@@ -1,20 +1,9 @@
 import React, { useContext } from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import { UserContext } from '../context/user/UserContext';
 
 const Navigation = ({ logo }) => {
-  const [user, { setUser }] = useContext(UserContext);
-
-  const isUserLoggedIn = () => {
-    const token = localStorage.getItem('token');
-    if (token && !user.email) {
-      const storageEmail = localStorage.getItem('email');
-      if (storageEmail) setUser({ ...user, email: storageEmail });
-      else return false;
-    }
-
-    return token && user.email;
-  };
+  const [{ email }, { setUser, logout }] = useContext(UserContext);
 
   return (
     <Navbar bg='dark' variant='dark'>
@@ -24,7 +13,7 @@ const Navigation = ({ logo }) => {
       </Navbar.Brand>
       <Nav className='mr-auto'>
         <Nav.Link href='#home'>Home</Nav.Link>
-        {isUserLoggedIn() && (
+        {email && (
           <>
             <Nav.Link href='#expenses'>Expenses</Nav.Link>
             <Nav.Link href='#categories'>Categories</Nav.Link>
@@ -32,12 +21,17 @@ const Navigation = ({ logo }) => {
           </>
         )}
       </Nav>
-      {isUserLoggedIn() && (
-        <Navbar.Collapse className='justify-content-end'>
-          <Navbar.Text>
-            Signed in as: <a href='#home'>{user.email}</a>
-          </Navbar.Text>
-        </Navbar.Collapse>
+      {email && (
+        <>
+          <Navbar.Collapse className='justify-content-end mr-2'>
+            <Navbar.Text>
+              Signed in as: <a href='#home'>{email}</a>
+            </Navbar.Text>
+          </Navbar.Collapse>
+          <Button variant='outline-secondary' onClick={logout}>
+            Sign out
+          </Button>
+        </>
       )}
     </Navbar>
   );

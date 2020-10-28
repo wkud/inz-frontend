@@ -36,14 +36,15 @@ export const UserProvider = (props) => {
       })
       .then((res) => {
         setUser({ ...user, loading: false, email: email });
+        localStorage.setItem('email', email)
         localStorage.setItem('token', res.data.access_token);
-        // console.log(localStorage.getItem('token'));
       })
       .catch((err) => {
         //TODO catch backend errors
         console.log(err);
         localStorage.setItem('token', null);
         setUser({ ...user, loading: false, email: null });
+        setUser({ ...user, loading: false });
       });
 
     // getIdentity();
@@ -51,18 +52,32 @@ export const UserProvider = (props) => {
 
   const getIdentity = async () => {
     setUser({ ...user, loading: true });
+    console.log('getting identity');
 
-    const res = await inzApi().get('protected');
+    inzApi()
+      .get('identity')
+      .then((res) => {
+        setUser({
+          ...user,
+          loading: false,
+          email: res.data.email,
+        });
+      })
+      .catch((err) => {
+        //TODO catch backend errors
+        console.log(err);
+        // localStorage.setItem('token', null);
+        // setUser({ ...user, loading: false, email: null });
+        console.log('getting identity - end ' + user.email);
+      });
+    // const res = await inzApi().get('identity');
 
-    setUser({
-      ...user,
-      loading: false,
-      email: res.data.email,
-    });
   };
 
   return (
-    <UserContext.Provider value={[user, setUser, register, login]}>
+    <UserContext.Provider
+      value={[user, { setUser, register, login, getIdentity }]}
+    >
       {props.children}
     </UserContext.Provider>
   );

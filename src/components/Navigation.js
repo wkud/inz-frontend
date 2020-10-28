@@ -3,7 +3,18 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { UserContext } from '../context/user/UserContext';
 
 const Navigation = ({ logo }) => {
-  const [user] = useContext(UserContext);
+  const [user, { setUser }] = useContext(UserContext);
+
+  const isUserLoggedIn = () => {
+    const token = localStorage.getItem('token');
+    if (token && !user.email) {
+      const storageEmail = localStorage.getItem('email');
+      if (storageEmail) setUser({ ...user, email: storageEmail });
+      else return false;
+    }
+
+    return token && user.email;
+  };
 
   return (
     <Navbar bg='dark' variant='dark'>
@@ -13,7 +24,7 @@ const Navigation = ({ logo }) => {
       </Navbar.Brand>
       <Nav className='mr-auto'>
         <Nav.Link href='#home'>Home</Nav.Link>
-        {user.email && (
+        {isUserLoggedIn() && (
           <>
             <Nav.Link href='#expenses'>Expenses</Nav.Link>
             <Nav.Link href='#categories'>Categories</Nav.Link>
@@ -21,7 +32,7 @@ const Navigation = ({ logo }) => {
           </>
         )}
       </Nav>
-      {user.email && (
+      {isUserLoggedIn() && (
         <Navbar.Collapse className='justify-content-end'>
           <Navbar.Text>
             Signed in as: <a href='#home'>{user.email}</a>

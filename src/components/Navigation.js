@@ -2,24 +2,29 @@ import React, { useContext } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { UserContext } from '../context/user/UserContext';
 
-const MyNavbar = ({ logo }) => {
+const Navigation = ({ logo }) => {
   const [user] = useContext(UserContext);
 
   return (
     <Navbar bg='dark' variant='dark'>
-      <Navbar.Brand href='#'>
+      <Navbar.Brand href='#home'>
         <img src={logo} alt='Logo' className='mid-font-img' />
         <span className='pl-2'>Penny</span>
       </Navbar.Brand>
       <Nav className='mr-auto'>
-        <Nav.Link href='#'>Home</Nav.Link>
-        <Nav.Link href='#features'>Features</Nav.Link>
-        <Nav.Link href='#pricing'>Pricing</Nav.Link>
+        <Nav.Link href='#home'>Home</Nav.Link>
+        {user.email && (
+          <>
+            <Nav.Link href='#expenses'>Expenses</Nav.Link>
+            <Nav.Link href='#categories'>Categories</Nav.Link>
+            <Nav.Link href='#limits'>Limits</Nav.Link>
+          </>
+        )}
       </Nav>
       {user.email && (
         <Navbar.Collapse className='justify-content-end'>
           <Navbar.Text>
-            Signed in as: <a href='#login'>{user.email}</a>
+            Signed in as: <a href='#home'>{user.email}</a>
           </Navbar.Text>
         </Navbar.Collapse>
       )}
@@ -27,4 +32,4 @@ const MyNavbar = ({ logo }) => {
   );
 };
 
-export default MyNavbar;
+export default Navigation;

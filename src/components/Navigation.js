@@ -3,7 +3,7 @@ import { Navbar, Nav, Button } from 'react-bootstrap';
 import { UserContext } from '../context/user/UserContext';
 
 const Navigation = ({ logo }) => {
-  const [{ email }, { setUser, logout }] = useContext(UserContext);
+  const [{ email }, { logout }] = useContext(UserContext);
 
   return (
     <Navbar bg='dark' variant='dark'>
@@ -28,7 +28,7 @@ const Navigation = ({ logo }) => {
               Signed in as: <a href='#home'>{email}</a>
             </Navbar.Text>
           </Navbar.Collapse>
-          <Button variant='outline-secondary' onClick={logout}>
+          <Button variant='outline-secondary' onClick={logout} href='#home'>
             Sign out
           </Button>
         </>

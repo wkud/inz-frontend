@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import inzApi from '../../apis/inzApi';
+import inzApi from '../apis/inzApi';
 
 export const UserContext = createContext();
 

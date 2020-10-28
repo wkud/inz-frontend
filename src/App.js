@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import { UserProvider } from './context/user/UserContext';
+import { UserProvider } from './context/UserContext';
 import Credits from './components/Credits';
 import Navigation from './components/Navigation';
 import Home from './components/pages/Home';

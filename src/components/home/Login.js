@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { UserContext } from '../../context/user/UserContext';
+import { UserContext } from '../../context/UserContext';
 
 const Login = () => {
   const [, {login}] = useContext(UserContext);

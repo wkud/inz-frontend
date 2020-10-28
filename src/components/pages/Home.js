@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import Login from '../../components/home/Login';
 import Register from '../../components/home/Register';
-import { UserContext } from '../../context/user/UserContext';
+import { UserContext } from '../../context/UserContext';
 
 const Home = () => {
   const [user] = useContext(UserContext);

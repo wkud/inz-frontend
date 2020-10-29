@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
+import { ExpenseProvider } from './context/ExpenseContext';
 import Credits from './components/Credits';
 import Navigation from './components/Navigation';
 import Home from './components/pages/Home';
@@ -15,19 +16,21 @@ function App() {
   return (
     <Router>
       <UserProvider>
-        <div className='parent bg-light d-flex flex-column justify-content-between'>
-          <Navigation logo={logo} />
-          <Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              <Route exact path='/home' component={Home} />
-              <Route exact path='/expenses' component={Expenses} />
-              <Route exact path='/categories' component={Categories} />
-              <Route exact path='/limits' component={Limits} />
-              <Route component={Home} />
-            </Switch>
-          </Suspense>
-          <Credits />
-        </div>
+        <ExpenseProvider>
+          <div className='parent bg-light d-flex flex-column justify-content-between'>
+            <Navigation logo={logo} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Switch>
+                <Route exact path='/home' component={Home} />
+                <Route exact path='/expenses' component={Expenses} />
+                <Route exact path='/categories' component={Categories} />
+                <Route exact path='/limits' component={Limits} />
+                <Route component={Home} />
+              </Switch>
+            </Suspense>
+            <Credits />
+          </div>
+        </ExpenseProvider>
       </UserProvider>
     </Router>
   );

@@ -10,8 +10,8 @@
   border-radius: 0.3rem;
   border-top-left-radius: 0rem;
 }
-.button-font{
-  font-size: 0.875
+.button-font {
+  font-size: 0.875;
 }
 .bg-highlight {
   background-color: #30353f;
@@ -30,4 +30,21 @@
 .small-lead-font {
   font-size: 0.8rem;
   font-weight: 300;
+}
+.lead-font {
+  font-weight: 300;
+}
+
+.model-view-list {
+  height: 70vh;
+}
+
+.scroll {
+  width: calc(min(max(40vw, 500px), 75vw));
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.model-view-stretch {
+  width: calc(min(max(40vw, 500px), 80vw));
 }

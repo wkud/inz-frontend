@@ -24,11 +24,11 @@ const Navigation = ({ logo }) => {
       {email && (
         <>
           <Navbar.Collapse className='justify-content-end mr-2'>
-            <Navbar.Text>
+            <Navbar.Text className='text-dark'>
               Signed in as: <a href='#home'>{email}</a>
             </Navbar.Text>
           </Navbar.Collapse>
-          <Button variant='outline-secondary' onClick={logout} href='#home'>
+          <Button variant='outline-dark' onClick={logout} href='#home'>
             Sign out
           </Button>
         </>

@@ -17,37 +17,26 @@ const Expense = ({ expense }) => {
 
   return (
     <>
-      <ListGroup.Item className='d-none d-sm-block'>
-        <Row className='d-none d-sm-flex flex-column flex-sm-row justify-content-between text-center'>
-          <Col xs={6} sm={3} className='text-sm-left'>
+      <ListGroup.Item>
+        <Row className='d-flex flex-row justify-content-between text-nowrap'>
+          <Col xs={6} sm={3} className='text-left'>
             {fistCharacterUpperCase(expense.product_name)}
           </Col>
           <Col xs={6} sm={3}>
-            <Badge variant='secondary' className='p-1'>
-              {categoryCaption()}
-            </Badge>
+            <div className='d-flex justify-content-end justify-content-sm-center'>
+              <Badge variant='secondary' className='p-1'>
+                {categoryCaption()}
+              </Badge>
+            </div>
           </Col>
-          <Col xs={6} sm={3} className='text-secondary'>
+          <Col xs={6} sm={3} className='text-secondary text-left text-sm-center'>
             {expense.date}
           </Col>
-          <Col xs={6} sm={3} className='text-sm-right'>
+          <Col xs={6} sm={3} className='text-right'>
             {priceCaption()}
           </Col>
         </Row>
       </ListGroup.Item>
-
-      <Card className='d-flex d-sm-none flex-column justify-content-between text-center m-1'>
-        <Card.Header as='h5' className='py-1'>
-          {fistCharacterUpperCase(expense.product_name)}
-        </Card.Header>
-        <div>{priceCaption()}</div>
-        <div className='mt-1'>
-          <Badge variant='secondary' className='p-1 d-inline mr-2'>
-            {categoryCaption()}
-          </Badge>
-          <div className='text-secondary d-inline'>{expense.date}</div>
-        </div>
-      </Card>
     </>
   );
 };

@@ -9,7 +9,7 @@ const ExpenseList = () => {
   const [loaded, setLoaded] = useState(false);
 
   const getExpenses = () => {
-    if (!loaded) {
+    if (!loaded && expenses.list.length === 0) {
       getAll();
       setLoaded(true);
     }

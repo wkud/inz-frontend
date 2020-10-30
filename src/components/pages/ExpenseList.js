@@ -78,15 +78,86 @@ const ExpenseList = () => {
         user_id: 3,
         category_id: 3,
       },
+      {
+        id: 11,
+        product_name: 'shopping',
+        price: 60,
+        amount: 1,
+        date: '2020-10-26',
+        user_id: 3,
+        category_id: 3,
+      },
+      {
+        id: 12,
+        product_name: 'shopping',
+        price: 60,
+        amount: 1,
+        date: '2020-10-26',
+        user_id: 3,
+        category_id: 3,
+      },
+      {
+        id: 13,
+        product_name: 'shopping',
+        price: 60,
+        amount: 1,
+        date: '2020-10-26',
+        user_id: 3,
+        category_id: 3,
+      },
+      {
+        id: 14,
+        product_name: 'shopping',
+        price: 60,
+        amount: 1,
+        date: '2020-10-26',
+        user_id: 3,
+        category_id: 3,
+      },
+      {
+        id: 15,
+        product_name: 'shopping',
+        price: 60,
+        amount: 1,
+        date: '2020-10-26',
+        user_id: 3,
+        category_id: 3,
+      },
+      {
+        id: 16,
+        product_name: 'shopping',
+        price: 60,
+        amount: 1,
+        date: '2020-10-26',
+        user_id: 3,
+        category_id: 3,
+      },
+      {
+        id: 17,
+        product_name: 'shopping',
+        price: 60,
+        amount: 1,
+        date: '2020-10-26',
+        user_id: 3,
+        category_id: 3,
+      },
+      {
+        id: 18,
+        product_name: 'shopping',
+        price: 60,
+        amount: 1,
+        date: '2020-10-26',
+        user_id: 3,
+        category_id: 3,
+      },
     ];
   };
 
 
   return (
     <div className='d-flex flex-column align-items-center'>
-      <div className='model-view-list'>
         <ModelListHeader syncAction={getAll} headerCaption='Expenses' />
-        <ListGroup className='scroll'>
+        <ListGroup className='model-view scroll'>
           <div className='p-0'>
             {getExpenses().map((expense) => (
               <Expense expense={expense} key={expense.id} />
@@ -94,12 +165,11 @@ const ExpenseList = () => {
           </div>
         </ListGroup>
         <Button
-          className='text-center model-view-stretch'
+          className='text-center model-view'
           href='#expense/form'
         >
           Add new expense
         </Button>
-      </div>
     </div>
   );
 };

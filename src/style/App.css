@@ -35,16 +35,11 @@
   font-weight: 300;
 }
 
-.model-view-list {
-  height: 70vh;
+.model-view {
+  width: calc(min(max(45vw, 515px), 75vw));
 }
-
 .scroll {
-  width: calc(min(max(40vw, 500px), 75vw));
   max-height: 60vh;
   overflow-y: auto;
   overflow-x: hidden;
-}
-.model-view-stretch {
-  width: calc(min(max(40vw, 500px), 75vw));
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, Row, Col, Badge, Card } from 'react-bootstrap';
+import { ListGroup, Row, Col, Badge } from 'react-bootstrap';
 
 const Expense = ({ expense }) => {
   const fistCharacterUpperCase = (caption) =>
@@ -7,7 +7,8 @@ const Expense = ({ expense }) => {
 
   const priceCaption = () => (
     <>
-      {expense.price}zł x {expense.amount} = {expense.price * expense.amount}zł
+      {expense.price}zł x {expense.amount} =
+      <br className='d-none d-sm-inline d-md-none'/> {expense.price * expense.amount}zł
     </>
   );
 

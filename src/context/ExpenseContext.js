@@ -1,4 +1,3 @@
-import userEvent from '@testing-library/user-event';
 import React, { createContext, useState } from 'react';
 import inzApi from '../apis/inzApi';
 
@@ -10,10 +9,9 @@ export const ExpenseProvider = (props) => {
     loading: false,
   });
 
-  //funcs
-
-  //get all
   const getAll = () => {
+    setExpenses({ ...expenses, loading: true });
+
     inzApi()
       .get('expense')
       .then((res) => {
@@ -28,13 +26,35 @@ export const ExpenseProvider = (props) => {
       .catch((err) => {
         //TODO catch backend errors
         console.log(err);
+        setExpenses({ ...expenses, loading: false });
       });
     return expenses.list;
   };
-  //create
+
+  const create = (newExpenseData) => {
+    setExpenses({ ...expenses, loading: true });
+
+    //TODO format newExpenseData to API format (category string to id)
+    inzApi()
+      .post('expense', newExpenseData)
+      .then((res) => {
+        setExpenses({
+          ...expenses,
+          loading: false,
+          list: [...expenses.list, newExpenseData],
+        });
+      })
+      .catch((err) => {
+        //TODO catch backend errors
+        console.log(err);
+        setExpenses({ ...expenses, loading: false });
+      });
+  };
 
   return (
-    <ExpenseContext.Provider value={[expenses, { setExpenses, getAll }]}>
+    <ExpenseContext.Provider
+      value={[expenses, { setExpenses, getAll, create }]}
+    >
       {props.children}
     </ExpenseContext.Provider>
   );

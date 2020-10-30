@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { ListGroup, Button, Row } from 'react-bootstrap';
+import { ListGroup, Button } from 'react-bootstrap';
 import { ExpenseContext } from '../../context/ExpenseContext';
 import Expense from '../expenses/Expense';
 import ModelListHeader from '../common-for-models/ModelListHeader';
 
-const Expenses = () => {
+const ExpenseList = () => {
   const [expenses, { getAll }] = useContext(ExpenseContext);
   const [loaded, setLoaded] = useState(false);
 
@@ -81,10 +81,11 @@ const Expenses = () => {
     ];
   };
 
+
   return (
     <div className='d-flex flex-column align-items-center'>
       <div className='model-view-list'>
-        <ModelListHeader syncButtonOnClick={getAll} headerCaption='Expense'/>
+        <ModelListHeader syncAction={getAll} headerCaption='Expenses' />
         <ListGroup className='scroll'>
           <div className='p-0'>
             {getExpenses().map((expense) => (
@@ -92,7 +93,10 @@ const Expenses = () => {
             ))}
           </div>
         </ListGroup>
-        <Button className='text-center model-view-stretch'>
+        <Button
+          className='text-center model-view-stretch'
+          href='#expense/form'
+        >
           Add new expense
         </Button>
       </div>
@@ -100,4 +104,4 @@ const Expenses = () => {
   );
 };
 
-export default Expenses;
+export default ExpenseList;

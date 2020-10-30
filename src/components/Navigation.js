@@ -15,9 +15,9 @@ const Navigation = ({ logo }) => {
         <Nav.Link href='#home'>Home</Nav.Link>
         {email && (
           <>
-            <Nav.Link href='#expenses'>Expenses</Nav.Link>
-            <Nav.Link href='#categories'>Categories</Nav.Link>
-            <Nav.Link href='#limits'>Limits</Nav.Link>
+            <Nav.Link href='#expense/list'>Expenses</Nav.Link>
+            <Nav.Link href='#category/list'>Categories</Nav.Link>
+            <Nav.Link href='#limit/list'>Limits</Nav.Link>
           </>
         )}
       </Nav>

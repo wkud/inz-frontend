@@ -5,7 +5,8 @@ import { ExpenseProvider } from './context/ExpenseContext';
 import Credits from './components/Credits';
 import Navigation from './components/Navigation';
 import Home from './components/pages/Home';
-import Expenses from './components/pages/Expenses';
+import ExpenseList from './components/pages/ExpenseList';
+import ExpenseForm from './components/pages/ExpenseForm';
 import Categories from './components/pages/Categories';
 import Limits from './components/pages/Limits';
 import logo from './static/penny.png';
@@ -22,9 +23,12 @@ function App() {
             <Suspense fallback={<div>Loading...</div>}>
               <Switch>
                 <Route exact path='/home' component={Home} />
-                <Route exact path='/expenses' component={Expenses} />
-                <Route exact path='/categories' component={Categories} />
-                <Route exact path='/limits' component={Limits} />
+                <Route exact path='/expense/list' component={ExpenseList} />
+                <Route exact path='/expense/form' component={ExpenseForm} />
+                <Route exact path='/category/list' component={Categories} />
+                <Route exact path='/category/form' component={Categories} />
+                <Route exact path='/limit/list' component={Limits} />
+                <Route exact path='/limit/form' component={Limits} />
                 <Route component={Home} />
               </Switch>
             </Suspense>

@@ -3,7 +3,7 @@ import { Navbar, Nav, Button } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
 
 const Navigation = ({ logo }) => {
-  const [{ email }, { logout }] = useContext(UserContext);
+  const { email, logout } = useContext(UserContext);
 
   return (
     <Navbar bg='dark' variant='dark'>

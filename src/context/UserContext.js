@@ -9,16 +9,16 @@ export const UserProvider = (props) => {
   const expense = useContext(ExpenseContext);
   const category = useContext(CategoryContext);
 
-  const [user, setUser] = useState({
+  const [state, setState] = useState({
     email: localStorage.getItem('email'),
     loading: false,
     errorMessage: '',
   });
 
-  const resetError = () => setUser({ ...user, errorMessage: '' });
+  const resetError = () => setState({ ...state, errorMessage: '' });
 
   const register = (email, password) => {
-    setUser({ ...user, loading: true });
+    setState({ ...state, loading: true });
 
     inzApi()
       .post('register', {
@@ -26,16 +26,16 @@ export const UserProvider = (props) => {
         password: password,
       })
       .then((res) => {
-        setUser({ ...user, loading: false });
+        setState({ ...state, loading: false });
       })
       .catch((err) => {
         console.log(err);
-        setUser({ ...user, loading: false, errorMessage: err.message });
+        setState({ ...state, loading: false, errorMessage: err.message });
       });
   };
 
   const login = (email, password) => {
-    setUser({ ...user, loading: true });
+    setState({ ...state, loading: true });
 
     inzApi()
       .post('login', {
@@ -44,7 +44,7 @@ export const UserProvider = (props) => {
       })
       .then((res) => {
         resetError();
-        setUser({ ...user, loading: false, email: email });
+        setState({ ...state, loading: false, email: email });
         localStorage.setItem('email', email);
         localStorage.setItem('token', res.data.access_token);
         expense.clearFlags();
@@ -53,8 +53,8 @@ export const UserProvider = (props) => {
       .catch((err) => {
         console.log(err);
         localStorage.setItem('token', '');
-        setUser({
-          ...user,
+        setState({
+          ...state,
           loading: false,
           email: '',
           errorMessage: err.message,
@@ -63,22 +63,22 @@ export const UserProvider = (props) => {
   };
 
   const getIdentity = async () => {
-    setUser({ ...user, loading: true });
+    setState({ ...state, loading: true });
     console.log('getting identity');
 
     inzApi()
       .get('identity')
       .then((res) => {
-        setUser({
-          ...user,
+        setState({
+          ...state,
           loading: false,
           email: res.data.email,
         });
       })
       .catch((err) => {
         console.log(err);
-        setUser({
-          ...user,
+        setState({
+          ...state,
           loading: false,
           errorMessage: err.message,
         });
@@ -86,14 +86,14 @@ export const UserProvider = (props) => {
   };
 
   const logout = () => {
-    setUser({ ...user, email: null });
+    setState({ ...state, email: null });
     localStorage.setItem('email', '');
     localStorage.setItem('token', '');
   };
 
   return (
     <UserContext.Provider
-      value={[user, { register, login, getIdentity, logout }]}
+      value={{...state, register, login, getIdentity, logout }}
     >
       {props.children}
     </UserContext.Provider>

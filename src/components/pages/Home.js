@@ -5,14 +5,14 @@ import Register from '../../components/home/Register';
 import { UserContext } from '../../context/UserContext';
 
 const Home = () => {
-  const [user] = useContext(UserContext);
+  const user = useContext(UserContext);
 
   return (
     <>
       <p className='lead'>
         {user.email ? (
           <>
-            It's empty here. <br/>
+            It's empty here. <br />
             Start by adding your expenses, creating your categories and plan by
             setting a limit.
           </>

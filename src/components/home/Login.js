@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { UserContext } from '../../context/UserContext';
 
 const Login = () => {
-  const [, {login}] = useContext(UserContext);
+  const { login } = useContext(UserContext);
 
   const credentialsInitialState = {
     email: '',

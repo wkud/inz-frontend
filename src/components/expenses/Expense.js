@@ -8,7 +8,8 @@ const Expense = ({ expense }) => {
   const priceCaption = () => (
     <>
       {expense.price}zł x {expense.amount} =
-      <br className='d-none d-sm-inline d-md-none'/> {expense.price * expense.amount}zł
+      <br className='d-none d-sm-inline d-md-none' />{' '}
+      {expense.price * expense.amount}zł
     </>
   );
 
@@ -30,7 +31,11 @@ const Expense = ({ expense }) => {
               </Badge>
             </div>
           </Col>
-          <Col xs={6} sm={3} className='text-secondary text-left text-sm-center'>
+          <Col
+            xs={6}
+            sm={3}
+            className='text-secondary text-left text-sm-center'
+          >
             {expense.date}
           </Col>
           <Col xs={6} sm={3} className='text-right'>

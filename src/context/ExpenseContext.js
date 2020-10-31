@@ -8,15 +8,18 @@ export const ExpenseProvider = (props) => {
     list: [],
     loading: false,
     errorMessage: '',
+    isApiListEmpty: false,
   });
 
   const sortExpenseListByDate = (list) =>
     list.sort((e1, e2) => new Date(e2.date) - new Date(e1.date));
 
-  const resetError = () => setState({ ...state, errorMessage: '' });
+  const clearFlags = () => setState({ ...state, errorMessage: '', isApiListEmpty: false });
 
   const getAll = () => {
-    if (state.loading || state.errorMessage) return;
+    if (state.loading) return;
+    if (state.errorMessage) return;
+    if (state.isApiListEmpty) return;
 
     setState({ ...state, loading: true });
 
@@ -27,6 +30,7 @@ export const ExpenseProvider = (props) => {
           ...state,
           loading: false,
           list: sortExpenseListByDate(res.data.list),
+          isApiListEmpty: res.data.list.length === 0,
         });
       })
       .catch((err) => {
@@ -59,7 +63,7 @@ export const ExpenseProvider = (props) => {
   };
 
   return (
-    <ExpenseContext.Provider value={{ ...state, resetError, getAll, create }}>
+    <ExpenseContext.Provider value={{ ...state, clearFlags, getAll, create }}>
       {props.children}
     </ExpenseContext.Provider>
   );

@@ -43,8 +43,8 @@ export const UserProvider = (props) => {
         setUser({ ...user, loading: false, email: email });
         localStorage.setItem('email', email);
         localStorage.setItem('token', res.data.access_token);
-        expense.resetError();
-        category.resetError();
+        expense.clearFlags();
+        category.clearFlags();
       })
       .catch((err) => {
         //TODO catch backend errors

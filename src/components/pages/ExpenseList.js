@@ -12,6 +12,11 @@ const ExpenseList = () => {
   };
   useEffect(() => getExpenses());
 
+  const syncExpenses = () => {
+    expense.clearFlags(); //force try again
+    expense.getAll();
+  };
+
   const noItemsCaption = () =>
     expense.loading
       ? 'Loading...'
@@ -21,7 +26,7 @@ const ExpenseList = () => {
 
   return (
     <div className='d-flex flex-column align-items-center'>
-      <ModelListHeader syncAction={expense.getAll} headerCaption='Expenses' />
+      <ModelListHeader syncAction={syncExpenses} headerCaption='Expenses' />
       <ListGroup className='model-view scroll'>
         <div className='p-0'>
           {expense.list.length === 0 ? (

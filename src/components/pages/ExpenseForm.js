@@ -29,17 +29,21 @@ const ExpenseForm = () => {
     }
   };
 
-  const noCategoryItem = { id: -1, name: 'No category' }
+  const noCategoryItem = { id: -1, name: 'No category' };
   const parseForm = (stringNumber, parsingFunction) => {
     const parsed = parsingFunction(stringNumber);
     return isNaN(parsed) ? '' : parsed;
   };
 
-  const syncCategories = () => {
+  const getCategories = () => {
     if (category.list.length === 0) category.getAll();
   };
-  useEffect(() => syncCategories());
+  useEffect(() => getCategories());
 
+  const syncCategories = () => {
+    category.clearFlags(); //force try again
+    category.getAll();
+  };
   return (
     <>
       <div className='d-flex flex-column align-items-center'>

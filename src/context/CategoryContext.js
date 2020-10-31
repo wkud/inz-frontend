@@ -21,13 +21,15 @@ export const CategoryProvider = (props) => {
     list: [],
     loading: false,
     errorMessage: '',
+    isApiListEmpty: false,
   });
 
-  const resetError = () => setState({ ...state, errorMessage: '' });
+  const clearFlags = () => setState({ ...state, errorMessage: '', isApiListEmpty: false });
 
   const getAll = () => {
     //TODO
     setState({ ...state, list: dummyData });
+    //isApiListEmpty = res.data.list.length === 0
     return state.list;
   };
 
@@ -36,7 +38,7 @@ export const CategoryProvider = (props) => {
   };
 
   return (
-    <CategoryContext.Provider value={{ ...state, resetError, getAll, create }}>
+    <CategoryContext.Provider value={{ ...state, clearFlags, getAll, create }}>
       {props.children}
     </CategoryContext.Provider>
   );

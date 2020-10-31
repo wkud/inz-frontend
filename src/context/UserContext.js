@@ -12,7 +12,10 @@ export const UserProvider = (props) => {
   const [user, setUser] = useState({
     email: localStorage.getItem('email'),
     loading: false,
+    errorMessage: '',
   });
+
+  const resetError = () => setUser({ ...user, errorMessage: '' });
 
   const register = (email, password) => {
     setUser({ ...user, loading: true });
@@ -26,8 +29,8 @@ export const UserProvider = (props) => {
         setUser({ ...user, loading: false });
       })
       .catch((err) => {
-        //TODO catch backend errors
         console.log(err);
+        setUser({ ...user, loading: false, errorMessage: err.message });
       });
   };
 
@@ -40,6 +43,7 @@ export const UserProvider = (props) => {
         password: password,
       })
       .then((res) => {
+        resetError();
         setUser({ ...user, loading: false, email: email });
         localStorage.setItem('email', email);
         localStorage.setItem('token', res.data.access_token);
@@ -47,10 +51,14 @@ export const UserProvider = (props) => {
         category.clearFlags();
       })
       .catch((err) => {
-        //TODO catch backend errors
         console.log(err);
         localStorage.setItem('token', '');
-        setUser({ ...user, loading: false, email: '' });
+        setUser({
+          ...user,
+          loading: false,
+          email: '',
+          errorMessage: err.message,
+        });
       });
   };
 
@@ -68,8 +76,12 @@ export const UserProvider = (props) => {
         });
       })
       .catch((err) => {
-        //TODO catch backend errors
         console.log(err);
+        setUser({
+          ...user,
+          loading: false,
+          errorMessage: err.message,
+        });
       });
   };
 

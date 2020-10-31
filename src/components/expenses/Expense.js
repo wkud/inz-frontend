@@ -1,10 +1,8 @@
 import React from 'react';
 import { ListGroup, Row, Col, Badge } from 'react-bootstrap';
+import {fistCharacterUpperCase} from '../../utility/stringUtility';
 
 const Expense = ({ expense }) => {
-  const fistCharacterUpperCase = (caption) =>
-    caption.charAt(0).toUpperCase() + caption.toLowerCase().slice(1);
-
   const priceCaption = () => (
     <>
       {expense.price}zł x {expense.amount} =

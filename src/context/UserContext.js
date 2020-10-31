@@ -1,9 +1,14 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useContext } from 'react';
+import { ExpenseContext } from './ExpenseContext';
+import { CategoryContext } from './CategoryContext';
 import inzApi from '../apis/inzApi';
 
 export const UserContext = createContext();
 
 export const UserProvider = (props) => {
+  const expense = useContext(ExpenseContext);
+  const category = useContext(CategoryContext);
+
   const [user, setUser] = useState({
     email: localStorage.getItem('email'),
     loading: false,
@@ -38,6 +43,8 @@ export const UserProvider = (props) => {
         setUser({ ...user, loading: false, email: email });
         localStorage.setItem('email', email);
         localStorage.setItem('token', res.data.access_token);
+        expense.resetError();
+        category.resetError();
       })
       .catch((err) => {
         //TODO catch backend errors
@@ -45,8 +52,6 @@ export const UserProvider = (props) => {
         localStorage.setItem('token', '');
         setUser({ ...user, loading: false, email: '' });
       });
-
-    // getIdentity();
   };
 
   const getIdentity = async () => {
@@ -70,13 +75,13 @@ export const UserProvider = (props) => {
 
   const logout = () => {
     setUser({ ...user, email: null });
-    localStorage.setItem('email', '')
-    localStorage.setItem('token', '')
+    localStorage.setItem('email', '');
+    localStorage.setItem('token', '');
   };
 
   return (
     <UserContext.Provider
-      value={[user, { setUser, register, login, getIdentity, logout }]}
+      value={[user, { register, login, getIdentity, logout }]}
     >
       {props.children}
     </UserContext.Provider>

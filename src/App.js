@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { UserProvider } from './context/UserContext';
 import { ExpenseProvider } from './context/ExpenseContext';
+import { CategoryProvider } from './context/CategoryContext';
 import Credits from './components/Credits';
 import Navigation from './components/Navigation';
 import Home from './components/pages/Home';
@@ -16,26 +17,28 @@ import './style/App.css';
 function App() {
   return (
     <Router>
-      <UserProvider>
+      <CategoryProvider>
         <ExpenseProvider>
-          <div className='parent bg-light d-flex flex-column justify-content-between'>
-            <Navigation logo={logo} />
-            <Suspense fallback={<div>Loading...</div>}>
-              <Switch>
-                <Route exact path='/home' component={Home} />
-                <Route exact path='/expense/list' component={ExpenseList} />
-                <Route exact path='/expense/form' component={ExpenseForm} />
-                <Route exact path='/category/list' component={Categories} />
-                <Route exact path='/category/form' component={Categories} />
-                <Route exact path='/limit/list' component={Limits} />
-                <Route exact path='/limit/form' component={Limits} />
-                <Route component={Home} />
-              </Switch>
-            </Suspense>
-            <Credits />
-          </div>
+          <UserProvider>
+            <div className='parent bg-light d-flex flex-column justify-content-between'>
+              <Navigation logo={logo} />
+              <Suspense fallback={<div>Loading...</div>}>
+                <Switch>
+                  <Route exact path='/home' component={Home} />
+                  <Route exact path='/expense/list' component={ExpenseList} />
+                  <Route exact path='/expense/form' component={ExpenseForm} />
+                  <Route exact path='/category/list' component={Categories} />
+                  <Route exact path='/category/form' component={Categories} />
+                  <Route exact path='/limit/list' component={Limits} />
+                  <Route exact path='/limit/form' component={Limits} />
+                  <Route component={Home} />
+                </Switch>
+              </Suspense>
+              <Credits />
+            </div>
+          </UserProvider>
         </ExpenseProvider>
-      </UserProvider>
+      </CategoryProvider>
     </Router>
   );
 }

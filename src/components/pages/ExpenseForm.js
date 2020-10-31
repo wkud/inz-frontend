@@ -1,30 +1,44 @@
-import React, { useState, useContext } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import React, { useState, useContext, useEffect } from 'react';
+import { Form, Button, Row, Col, InputGroup } from 'react-bootstrap';
 import { ExpenseContext } from '../../context/ExpenseContext';
+import { CategoryContext } from '../../context/CategoryContext';
 import ModelFormHeader from '../common-for-models/ModelFormHeader';
+import { fistCharacterUpperCase } from '../../utility/stringUtility';
 
 const ExpenseForm = () => {
-  const [, { create }] = useContext(ExpenseContext);
+  const expense = useContext(ExpenseContext);
+  const category = useContext(CategoryContext);
 
   const initialForm = {
     product_name: '',
     price: '',
     amount: 1,
     date: new Date().toJSON().slice(0, 10),
-    category: 'no category',
+    category_id: undefined,
   };
   const [formData, setFormData] = useState(initialForm);
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (e.target.checkValidity()) {
-      create(formData); //TODO
+      expense.create(formData); //TODO
       console.log(formData);
       setFormData(initialForm);
     } else {
       console.log('invalid expense data');
     }
   };
+
+  const noCategoryItem = { id: -1, name: 'No category' }
+  const parseForm = (stringNumber, parsingFunction) => {
+    const parsed = parsingFunction(stringNumber);
+    return isNaN(parsed) ? '' : parsed;
+  };
+
+  const syncCategories = () => {
+    if (category.list.length === 0) category.getAll();
+  };
+  useEffect(() => syncCategories());
 
   return (
     <>
@@ -54,13 +68,16 @@ const ExpenseForm = () => {
                 <Form.Label>Price</Form.Label>
                 <Form.Control
                   type='number'
-                  placeholder='Price'
+                  placeholder='0,00 zł'
                   required
                   value={formData.price}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      price: parseFloat(e.target.value.replace(',', '.')),
+                      price: parseForm(
+                        e.target.value.replace(',', '.'),
+                        parseFloat
+                      ),
                     })
                   }
                 />
@@ -77,7 +94,7 @@ const ExpenseForm = () => {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      amount: parseInt(e.target.value),
+                      amount: parseForm(e.target.value, parseInt),
                     })
                   }
                 />
@@ -100,20 +117,30 @@ const ExpenseForm = () => {
             <Col xs={12} sm={6} className='p-0'>
               <Form.Group controlId='expenseCategory'>
                 <Form.Label>Category</Form.Label>
-                <Form.Control
-                  as='select'
-                  required
-                  value={formData.category}
-                  onChange={(e) =>
-                    setFormData({ ...formData, category: e.target.value })
-                  }
-                >
-                  <option>No category</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </Form.Control>
+                <InputGroup>
+                  <Form.Control
+                    as='select'
+                    required
+                    value={formData.category}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        category_id: parseInt(e.target.value),
+                      })
+                    }
+                  >
+                    {[noCategoryItem, ...category.list].map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {fistCharacterUpperCase(c.name)}
+                      </option>
+                    ))}
+                  </Form.Control>
+                  <InputGroup.Append>
+                    <Button variant='outline-primary' onClick={syncCategories}>
+                      <i className='fas fa-sync-alt' />
+                    </Button>
+                  </InputGroup.Append>
+                </InputGroup>
               </Form.Group>
             </Col>
           </Row>

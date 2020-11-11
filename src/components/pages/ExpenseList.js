@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { ListGroup, Button } from 'react-bootstrap';
 import { ExpenseContext } from '../../context/ExpenseContext';
-import Expense from '../expenses/Expense';
+import Expense from '../model_items/Expense';
 import ModelListHeader from '../common-for-models/ModelListHeader';
 
 const ExpenseList = () => {

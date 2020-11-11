@@ -8,7 +8,7 @@ import Navigation from './components/Navigation';
 import Home from './components/pages/Home';
 import ExpenseList from './components/pages/ExpenseList';
 import ExpenseForm from './components/pages/ExpenseForm';
-import Categories from './components/pages/Categories';
+import CategoryList from './components/pages/CategoryList';
 import Limits from './components/pages/Limits';
 import logo from './static/penny.png';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -27,8 +27,7 @@ function App() {
                   <Route exact path='/home' component={Home} />
                   <Route exact path='/expense/list' component={ExpenseList} />
                   <Route exact path='/expense/form' component={ExpenseForm} />
-                  <Route exact path='/category/list' component={Categories} />
-                  <Route exact path='/category/form' component={Categories} />
+                  <Route exact path='/category/list' component={CategoryList} />
                   <Route exact path='/limit/list' component={Limits} />
                   <Route exact path='/limit/form' component={Limits} />
                   <Route component={Home} />

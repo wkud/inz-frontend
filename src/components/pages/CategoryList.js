@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { CategoryContext } from '../../context/CategoryContext';
-import Category from '../model_items/Category'
+import Category from '../model_items/Category';
+import CategoryForm from '../pages/CategoryForm';
 import ModelListHeader from '../common-for-models/ModelListHeader';
 
 const CategoryList = () => {
@@ -17,9 +18,8 @@ const CategoryList = () => {
     category.getAll();
   };
 
-
   const noItemsCaption = () =>
-  category.loading
+    category.loading
       ? 'Loading...'
       : category.errorMessage
       ? 'Cannot load category list due to an error'
@@ -39,9 +39,7 @@ const CategoryList = () => {
           )}
         </div>
       </ListGroup>
-      {/* <Button className='text-center model-view' href='#category/form'>
-        Add new category
-      </Button> */}
+      <CategoryForm />
     </div>
   );
 };

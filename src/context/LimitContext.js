@@ -1,0 +1,68 @@
+import React, { createContext, useState } from 'react';
+import inzApi from '../apis/inzApi';
+
+export const LimitContext = createContext();
+
+export const LimitProvider = (props) => {
+  const [state, setState] = useState({
+    list: [],
+    loading: false,
+    errorMessage: '',
+    isApiListEmpty: false,
+  });
+
+  const clearFlags = () =>
+    setState({ ...state, errorMessage: '', isApiListEmpty: false });
+
+  const getAll = () => {
+    if (state.loading) return;
+    if (state.errorMessage) return;
+    if (state.isApiListEmpty) return;
+
+    setState({ ...state, loading: true });
+
+    inzApi()
+      .get('limit')
+      .then((res) => {
+        setState({
+          ...state,
+          loading: false,
+          list: res.data.list,
+          isApiListEmpty: res.data.list.length === 0,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setState({ ...state, loading: false, errorMessage: err.message });
+      });
+    return state.list;
+  };
+
+  const create = (newLimitData) => {
+    setState({ ...state, loading: true });
+
+    inzApi()
+      .post('limit', newLimitData)
+      .then((res) => {
+        console.log(res.data);
+        setState({
+          ...state,
+          loading: false,
+          list: [
+            ...state.list,
+            { ...newLimitData, id: res.data.id },
+          ],
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        setState({ ...state, loading: false, errorMessage: err.message });
+      });
+  };
+
+  return (
+    <LimitContext.Provider value={{ ...state, clearFlags, getAll, create }}>
+      {props.children}
+    </LimitContext.Provider>
+  );
+};

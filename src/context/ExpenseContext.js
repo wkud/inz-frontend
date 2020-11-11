@@ -14,7 +14,8 @@ export const ExpenseProvider = (props) => {
   const sortExpenseListByDate = (list) =>
     list.sort((e1, e2) => new Date(e2.date) - new Date(e1.date));
 
-  const clearFlags = () => setState({ ...state, errorMessage: '', isApiListEmpty: false });
+  const clearFlags = () =>
+    setState({ ...state, errorMessage: '', isApiListEmpty: false });
 
   const getAll = () => {
     if (state.loading) return;

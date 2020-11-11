@@ -9,7 +9,8 @@ import Home from './components/pages/Home';
 import ExpenseList from './components/pages/ExpenseList';
 import ExpenseForm from './components/pages/ExpenseForm';
 import CategoryList from './components/pages/CategoryList';
-import Limits from './components/pages/Limits';
+import LimitList from './components/pages/LimitList';
+import LimitForm from './components/pages/LimitForm';
 import logo from './static/penny.png';
 import 'bootstrap/dist/css/bootstrap.css';
 import './style/App.css';
@@ -28,8 +29,8 @@ function App() {
                   <Route exact path='/expense/list' component={ExpenseList} />
                   <Route exact path='/expense/form' component={ExpenseForm} />
                   <Route exact path='/category/list' component={CategoryList} />
-                  <Route exact path='/limit/list' component={Limits} />
-                  <Route exact path='/limit/form' component={Limits} />
+                  <Route exact path='/limit/list' component={LimitList} />
+                  <Route exact path='/limit/form' component={LimitForm} />
                   <Route component={Home} />
                 </Switch>
               </Suspense>

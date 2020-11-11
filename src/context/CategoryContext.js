@@ -24,7 +24,8 @@ export const CategoryProvider = (props) => {
     isApiListEmpty: false,
   });
 
-  const clearFlags = () => setState({ ...state, errorMessage: '', isApiListEmpty: false });
+  const clearFlags = () =>
+    setState({ ...state, errorMessage: '', isApiListEmpty: false });
 
   const getAll = () => {
     //TODO
@@ -38,7 +39,9 @@ export const CategoryProvider = (props) => {
   };
 
   return (
-    <CategoryContext.Provider value={{ ...state, clearFlags, getAll, create }}>
+    <CategoryContext.Provider
+      value={{ ...state, clearFlags, getAll, create }}
+    >
       {props.children}
     </CategoryContext.Provider>
   );

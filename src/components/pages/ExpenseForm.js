@@ -21,7 +21,7 @@ const ExpenseForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (e.target.checkValidity()) {
-      expense.create(formData); //TODO
+      expense.create(formData); 
       console.log(formData);
       setFormData(initialForm);
     } else {

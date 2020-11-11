@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext } from 'react';
 import { ExpenseContext } from './ExpenseContext';
 import { CategoryContext } from './CategoryContext';
+import { LimitContext } from './LimitContext';
 import inzApi from '../apis/inzApi';
 
 export const UserContext = createContext();
@@ -8,6 +9,7 @@ export const UserContext = createContext();
 export const UserProvider = (props) => {
   const expense = useContext(ExpenseContext);
   const category = useContext(CategoryContext);
+  const limit = useContext(LimitContext);
 
   const [state, setState] = useState({
     email: localStorage.getItem('email'),
@@ -49,6 +51,7 @@ export const UserProvider = (props) => {
         localStorage.setItem('token', res.data.access_token);
         expense.clearFlags();
         category.clearFlags();
+        limit.clearFlags();
       })
       .catch((err) => {
         console.log(err);

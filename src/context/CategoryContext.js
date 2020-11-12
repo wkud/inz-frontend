@@ -1,19 +1,6 @@
 import React, { createContext, useState } from 'react';
 import inzApi from '../apis/inzApi';
 
-const dummyData = [
-  {
-    id: 3,
-    name: 'food',
-    user_id: 3,
-  },
-  {
-    id: 4,
-    name: 'travel',
-    user_id: 3,
-  },
-];
-
 export const CategoryContext = createContext();
 
 export const CategoryProvider = (props) => {

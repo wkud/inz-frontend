@@ -4,6 +4,7 @@ import { ExpenseContext } from '../../context/ExpenseContext';
 import { CategoryContext } from '../../context/CategoryContext';
 import ModelFormHeader from '../common-for-models/ModelFormHeader';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
+import { todayInIsoFormat } from '../../utility/dateUtility';
 
 const ExpenseForm = () => {
   const expense = useContext(ExpenseContext);
@@ -13,15 +14,15 @@ const ExpenseForm = () => {
     product_name: '',
     price: '',
     amount: 1,
-    date: new Date().toJSON().slice(0, 10),
-    category_id: undefined,
+    date: todayInIsoFormat(),
+    category_id: -1,
   };
   const [formData, setFormData] = useState(initialForm);
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (e.target.checkValidity()) {
-      expense.create(formData); 
+      expense.create(formData);
       console.log(formData);
       setFormData(initialForm);
     } else {
@@ -30,11 +31,6 @@ const ExpenseForm = () => {
   };
 
   const noCategoryItem = { id: -1, name: 'No category' };
-  const parseForm = (stringNumber, parsingFunction) => {
-    const parsed = parsingFunction(stringNumber);
-    return isNaN(parsed) ? '' : parsed;
-  };
-
   const getCategories = () => {
     if (category.list.length === 0) category.getAll();
   };
@@ -44,6 +40,12 @@ const ExpenseForm = () => {
     category.clearFlags(); //force try again
     category.getAll();
   };
+
+  const parseForm = (stringNumber, parsingFunction) => {
+    const parsed = parsingFunction(stringNumber);
+    return isNaN(parsed) ? '' : parsed;
+  };
+
   return (
     <>
       <div className='d-flex flex-column align-items-center'>
@@ -125,7 +127,7 @@ const ExpenseForm = () => {
                   <Form.Control
                     as='select'
                     required
-                    value={formData.category}
+                    value={formData.category_id}
                     onChange={(e) =>
                       setFormData({
                         ...formData,

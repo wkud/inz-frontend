@@ -50,7 +50,7 @@ export const LimitProvider = (props) => {
           loading: false,
           list: [
             ...state.list,
-            { ...newLimitData, id: res.data.id },
+            { ...newLimitData, id: res.data.id, category_name: res.data.category_name },
           ],
         });
       })

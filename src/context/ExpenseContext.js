@@ -53,7 +53,7 @@ export const ExpenseProvider = (props) => {
           loading: false,
           list: sortExpenseListByDate([
             ...state.list,
-            { ...newExpenseData, id: res.data.id },
+            { ...newExpenseData, id: res.data.id, category_name: res.data.category_name },
           ]),
         });
       })

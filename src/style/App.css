@@ -31,9 +31,19 @@
   font-size: 0.8rem;
   font-weight: 300;
 }
+.small-font{
+  font-size: 0.8rem;
+}
+.xs-font{
+  font-size: 0.6rem;
+}
 .lead-font {
   font-weight: 300;
 }
+.base-font{
+  font-size: 1rem;
+}
+
 
 .model-view {
   width: calc(min(max(45vw, 515px), 75vw));

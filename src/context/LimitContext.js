@@ -11,7 +11,9 @@ const dummyData = [
     category_name: 'food',
     info: {
       saving_rate: 'good',
-      spent_amount: 0,
+      spent_amount: 1,
+      duration_past: 22,
+      duration_length: 22,
     },
   },
   {
@@ -24,6 +26,8 @@ const dummyData = [
     info: {
       saving_rate: 'bad',
       spent_amount: 122,
+      duration_past: 30,
+      duration_length: 30,
     },
   },
   {
@@ -36,6 +40,8 @@ const dummyData = [
     info: {
       saving_rate: 'bad',
       spent_amount: 60,
+      duration_past: 12,
+      duration_length: 30,
     },
   },
   {
@@ -48,6 +54,8 @@ const dummyData = [
     info: {
       saving_rate: 'bad',
       spent_amount: 60,
+      duration_past: 0,
+      duration_length: 1,
     },
   },
   {
@@ -60,6 +68,8 @@ const dummyData = [
     info: {
       saving_rate: 'good',
       spent_amount: 0,
+      duration_past: 4,
+      duration_length: 7,
     },
   },
   {
@@ -72,6 +82,8 @@ const dummyData = [
     info: {
       saving_rate: 'good',
       spent_amount: 0,
+      duration_past: 12,
+      duration_length: 30,
     },
   },
   {
@@ -84,6 +96,8 @@ const dummyData = [
     info: {
       saving_rate: 'good',
       spent_amount: 0,
+      duration_past: 12,
+      duration_length: 30,
     },
   },
 ];
@@ -143,7 +157,7 @@ export const LimitProvider = (props) => {
             {
               ...newLimitData,
               id: res.data.id,
-              category_name: res.data.category_name,
+              category_name: res.data.category_name, //TODO get 'info' field in response
             },
           ],
         });

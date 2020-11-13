@@ -1,6 +1,93 @@
 import React, { createContext, useState } from 'react';
 import inzApi from '../apis/inzApi';
 
+const dummyData = [
+  {
+    id: 2,
+    duration_start: '2020-07-10',
+    duration_end: '2020-07-31',
+    planned_amount: 500,
+    category_id: 3,
+    category_name: 'food',
+    info: {
+      saving_rate: 'good',
+      spent_amount: 0,
+    },
+  },
+  {
+    id: 3,
+    duration_start: '2020-10-01',
+    duration_end: '2020-10-30',
+    planned_amount: 99,
+    category_id: 3,
+    category_name: 'food',
+    info: {
+      saving_rate: 'bad',
+      spent_amount: 122,
+    },
+  },
+  {
+    id: 4,
+    duration_start: '2020-11-01',
+    duration_end: '2020-11-30',
+    planned_amount: 100,
+    category_id: 4,
+    category_name: 'travel',
+    info: {
+      saving_rate: 'bad',
+      spent_amount: 60,
+    },
+  },
+  {
+    id: 8,
+    duration_start: '2020-11-14',
+    duration_end: '2020-11-14',
+    planned_amount: 200,
+    category_id: 4,
+    category_name: 'travel',
+    info: {
+      saving_rate: 'bad',
+      spent_amount: 60,
+    },
+  },
+  {
+    id: 7,
+    duration_start: '2020-11-09',
+    duration_end: '2020-11-15',
+    planned_amount: 50,
+    category_id: 5,
+    category_name: 'Party',
+    info: {
+      saving_rate: 'good',
+      spent_amount: 0,
+    },
+  },
+  {
+    id: 5,
+    duration_start: '2020-11-01',
+    duration_end: '2020-11-30',
+    planned_amount: 100,
+    category_id: 6,
+    category_name: 'Sport',
+    info: {
+      saving_rate: 'good',
+      spent_amount: 0,
+    },
+  },
+  {
+    id: 6,
+    duration_start: '2020-11-01',
+    duration_end: '2020-11-30',
+    planned_amount: 100,
+    category_id: 6,
+    category_name: 'Sport',
+    info: {
+      saving_rate: 'good',
+      spent_amount: 0,
+    },
+  },
+];
+
 export const LimitContext = createContext();
 
 export const LimitProvider = (props) => {
@@ -19,23 +106,26 @@ export const LimitProvider = (props) => {
     if (state.errorMessage) return;
     if (state.isApiListEmpty) return;
 
-    setState({ ...state, loading: true });
+    setState({ ...state, list: dummyData });
+    return;
 
-    inzApi()
-      .get('limit')
-      .then((res) => {
-        setState({
-          ...state,
-          loading: false,
-          list: res.data.list,
-          isApiListEmpty: res.data.list.length === 0,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        setState({ ...state, loading: false, errorMessage: err.message });
-      });
-    return state.list;
+    // setState({ ...state, loading: true });
+
+    // inzApi()
+    //   .get('limit')
+    //   .then((res) => {
+    //     setState({
+    //       ...state,
+    //       loading: false,
+    //       list: res.data.list,
+    //       isApiListEmpty: res.data.list.length === 0,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setState({ ...state, loading: false, errorMessage: err.message });
+    //   });
+    // return state.list;
   };
 
   const create = (newLimitData) => {
@@ -50,7 +140,11 @@ export const LimitProvider = (props) => {
           loading: false,
           list: [
             ...state.list,
-            { ...newLimitData, id: res.data.id, category_name: res.data.category_name },
+            {
+              ...newLimitData,
+              id: res.data.id,
+              category_name: res.data.category_name,
+            },
           ],
         });
       })

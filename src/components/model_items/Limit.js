@@ -13,6 +13,9 @@ const Limit = ({ limit, rateVisible }) => {
     </Col>
   );
 
+  const progressBarValue = () =>
+    Math.floor((limit.info.spent_amount / limit.planned_amount) * 100);
+
   return (
     <ListGroup.Item>
       <Row className='d-flex flex-row justify-content-between text-nowrap'>
@@ -21,13 +24,24 @@ const Limit = ({ limit, rateVisible }) => {
         </Col>
         <LimitDurationComponent clsName='d-none d-sm-inline' />
         <Col xs={6} sm={3} className='text-right'>
+          {rateVisible &&
+            (progressBarValue() === 0 ? (
+              <span className='text-dark'>{limit.info.spent_amount}%</span>
+            ) : (
+              limit.info.spent_amount
+            ))}
+          {/* {rateVisible && <span className={limit.info.saving_rate === 'good' ? 'text-success' : 'text-danger'}>{limit.info.spent_amount}</span>} */}
+          {rateVisible && ' / '}
           {limit.planned_amount}zł
         </Col>
         <LimitDurationComponent clsName='d-sm-none' />
       </Row>
-      {rateVisible && (
+      {rateVisible && progressBarValue() !== 0 && (
         <div className='pt-2'>
-          <ProgressBar className='' now={80} /> 
+          <ProgressBar
+            now={progressBarValue() === 0 ? 0 : Math.max(5, progressBarValue())}
+            label={`${progressBarValue()}%`}
+          />
         </div>
       )}
     </ListGroup.Item>

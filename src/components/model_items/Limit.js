@@ -1,8 +1,8 @@
 import React from 'react';
-import { ListGroup, Row, Col } from 'react-bootstrap';
+import { ListGroup, Row, Col, ProgressBar } from 'react-bootstrap';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
 
-const Limit = ({ limit }) => {
+const Limit = ({ limit, rateVisible }) => {
   const LimitDurationComponent = ({ clsName }) => (
     <Col
       xs={6}
@@ -25,6 +25,11 @@ const Limit = ({ limit }) => {
         </Col>
         <LimitDurationComponent clsName='d-sm-none' />
       </Row>
+      {rateVisible && (
+        <div className='pt-2'>
+          <ProgressBar className='' now={80} /> 
+        </div>
+      )}
     </ListGroup.Item>
   );
 };

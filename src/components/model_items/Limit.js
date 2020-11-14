@@ -1,7 +1,6 @@
 import React from 'react';
 import { ListGroup, Row, Col, ProgressBar } from 'react-bootstrap';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
-import LimitInfoProgressBar from '../model-views-addons/LimitInfoProgressBar';
 
 const Limit = ({ limit, rateVisible }) => {
   const LimitDurationComponent = ({ clsName }) => (

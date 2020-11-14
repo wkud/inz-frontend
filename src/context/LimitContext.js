@@ -11,7 +11,7 @@ const dummyData = [
     category_name: 'food',
     info: {
       saving_rate: 'good',
-      spent_amount: 1,
+      spent_amount: 100,
       duration_past: 22,
       duration_length: 22,
     },
@@ -100,6 +100,20 @@ const dummyData = [
       duration_length: 30,
     },
   },
+  // {
+  //   id: 7,
+  //   duration_start: '2020-11-01',
+  //   duration_end: '2020-11-30',
+  //   planned_amount: 100,
+  //   category_id: 6,
+  //   category_name: 'Sport',
+  //   info: {
+  //     saving_rate: 'good',
+  //     spent_amount: 0,
+  //     duration_past: 12,
+  //     duration_length: 30,
+  //   },
+  // },
 ];
 
 export const LimitContext = createContext();
@@ -120,7 +134,7 @@ export const LimitProvider = (props) => {
     if (state.errorMessage) return;
     if (state.isApiListEmpty) return;
 
-    setState({ ...state, list: dummyData });
+    setState({ ...state, list: dummyData }); //TODO sort by duration_end (late first)
     return;
 
     // setState({ ...state, loading: true });
@@ -131,7 +145,7 @@ export const LimitProvider = (props) => {
     //     setState({
     //       ...state,
     //       loading: false,
-    //       list: res.data.list,
+    //       list: res.data.list, //TODO sort by duration_end (late first)
     //       isApiListEmpty: res.data.list.length === 0,
     //     });
     //   })

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ListGroup, Row, Col, ProgressBar } from 'react-bootstrap';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
+import LimitInfoProgressBar from '../model-views-addons/LimitInfoProgressBar';
 
 const Limit = ({ limit, rateVisible }) => {
   const LimitDurationComponent = ({ clsName }) => (
@@ -13,62 +14,78 @@ const Limit = ({ limit, rateVisible }) => {
     </Col>
   );
 
-  const progressBarValue = () =>
+  const isLimitFinished = () =>
+    limit.info.duration_past >= limit.info.duration_length;
+  const spentPercent = () =>
     Math.floor((limit.info.spent_amount / limit.planned_amount) * 100);
 
   const savingRateCaption = () => {
-    if (limit.info.duration_past >= limit.info.duration_length) { //is duration finished
+    if (isLimitFinished()) {
       const savings = Math.abs(limit.planned_amount - limit.info.spent_amount);
       return limit.info.saving_rate === 'good'
         ? `You saved ${savings}zł!`
-        : `Limit exceeded by ${savings}zł`;
+        : "You've exceeded the limit.";
     } else
       return limit.info.saving_rate === 'good'
         ? 'Good job - keep saving!'
-        : "You've spent too much!";
+        : "You're spending fast!";
   };
+
   const durationCaption = () => {
-    const percent = Math.floor(
-      (limit.info.duration_past / limit.info.duration_length) * 100
-    );
-    if (percent === 100) return 'Finished';
-    else if (percent === 0) return "Didn't started yet";
-    else
-      return `Days past: ${limit.info.duration_past} / ${limit.info.duration_length} (${percent}%)`;
+    return `Days passed: ${limit.info.duration_past} / ${limit.info.duration_length}`;
   };
 
   return (
     <ListGroup.Item>
-      <Row className='d-flex flex-row justify-content-between text-nowrap'>
+      <Row className='d-flex flex-row justify-content-between'>
         <Col xs={6} sm={3} className='text-left'>
           {fistCharacterUpperCase(limit.category_name)}
         </Col>
         <LimitDurationComponent clsName='d-none d-sm-inline' />
         <Col xs={6} sm={3} className='text-right'>
-          {rateVisible && limit.info.spent_amount}
-          {rateVisible && ' / '}
+          {limit.info.spent_amount}
+          {' / '}
           {limit.planned_amount}zł
         </Col>
         <LimitDurationComponent clsName='d-sm-none' />
       </Row>
       {rateVisible && (
         <>
-          {progressBarValue() !== 0 && <div className='pt-2'>
-            <ProgressBar
-              now={
-                progressBarValue() === 0 ? 0 : Math.max(5, progressBarValue())
-              }
-            />
-          </div>}
+          {
+            <div className='pt-2'>
+              <ProgressBar>
+                <ProgressBar
+                  className='progress-bar-font'
+                  variant={
+                    spentPercent() > 100
+                      ? 'danger'
+                      : isLimitFinished()
+                      ? 'success'
+                      : 'primary'
+                  }
+                  animated
+                  label={`spent ${spentPercent()}%`}
+                  now={spentPercent()}
+                />
+              </ProgressBar>
+            </div>
+          }
           <Row className='small-font text-dark'>
             <Col sm={4} className='text-left'>
               {durationCaption()}
             </Col>
-            <Col sm={4} className='base-font'>{savingRateCaption() + ' '} 
-            {limit.info.saving_rate === 'good' ? <i className="far fa-smile-beam primary text-success"/> : <i className="far fa-frown text-danger"/>}
+            <Col sm={4} className='base-font text-wrap'>
+              {savingRateCaption() + ' '}
+              {limit.info.saving_rate === 'good' ? (
+                <i className='far fa-smile-beam text-success' />
+              ) : spentPercent() > 100 ? (
+                <i className='far fa-angry text-danger' />
+              ) : (
+                <i className='far fa-frown text-warning' />
+              )}
             </Col>
             <Col sm={4} className='text-right'>
-              spent {progressBarValue()}%
+              total spending {spentPercent()}%
             </Col>
           </Row>
         </>

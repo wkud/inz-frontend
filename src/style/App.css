@@ -43,6 +43,10 @@
 .base-font{
   font-size: 1rem;
 }
+.progress-bar-font{
+  font-size: 0.8rem;
+  font-weight: 600;
+}
 
 
 .model-view {

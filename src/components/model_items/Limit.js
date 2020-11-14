@@ -1,38 +1,15 @@
 import React from 'react';
-import { ListGroup, Row, Col, ProgressBar } from 'react-bootstrap';
+import { ListGroup, Row, Col } from 'react-bootstrap';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
+import LimitDuration from '../model-views-addons/LimitDuration';
+import LimitInfoProgressBar from '../model-views-addons/LimitInfoProgressBar';
+import LimitInfoSavingRateCaption from '../model-views-addons/LimitInfoSavingRateCaption';
 
 const Limit = ({ limit, rateVisible }) => {
-  const LimitDurationComponent = ({ clsName }) => (
-    <Col
-      xs={6}
-      sm={6}
-      className={'text-secondary text-left text-sm-center ' + clsName}
-    >
-      {limit.duration_start} to {limit.duration_end}
-    </Col>
-  );
-
   const isLimitFinished = () =>
     limit.info.duration_past >= limit.info.duration_length;
   const spentPercent = () =>
     Math.floor((limit.info.spent_amount / limit.planned_amount) * 100);
-
-  const savingRateCaption = () => {
-    if (isLimitFinished()) {
-      const savings = Math.abs(limit.planned_amount - limit.info.spent_amount);
-      return limit.info.saving_rate === 'good'
-        ? `You saved ${savings}zł!`
-        : "You've exceeded the limit.";
-    } else
-      return limit.info.saving_rate === 'good'
-        ? 'Good job - keep saving!'
-        : "You're spending fast!";
-  };
-
-  const durationCaption = () => {
-    return `Days passed: ${limit.info.duration_past} / ${limit.info.duration_length}`;
-  };
 
   return (
     <ListGroup.Item>
@@ -40,49 +17,36 @@ const Limit = ({ limit, rateVisible }) => {
         <Col xs={6} sm={3} className='text-left'>
           {fistCharacterUpperCase(limit.category_name)}
         </Col>
-        <LimitDurationComponent clsName='d-none d-sm-inline' />
+        <LimitDuration
+          clsName='d-none d-sm-inline'
+          durationStart={limit.duration_start}
+          durationEnd={limit.duration_end}
+        />
         <Col xs={6} sm={3} className='text-right'>
-          {limit.info.spent_amount}
-          {' / '}
-          {limit.planned_amount}zł
+          {`${limit.info.spent_amount} / ${limit.planned_amount}zł`}
         </Col>
-        <LimitDurationComponent clsName='d-sm-none' />
+        <LimitDuration
+          clsName='d-sm-none'
+          durationStart={limit.duration_start}
+          durationEnd={limit.duration_end}
+        />
       </Row>
       {rateVisible && (
         <>
-          {
-            <div className='pt-2'>
-              <ProgressBar>
-                <ProgressBar
-                  className='progress-bar-font'
-                  variant={
-                    spentPercent() > 100
-                      ? 'danger'
-                      : isLimitFinished()
-                      ? 'success'
-                      : 'primary'
-                  }
-                  animated
-                  label={`spent ${spentPercent()}%`}
-                  now={spentPercent()}
-                />
-              </ProgressBar>
-            </div>
-          }
+          <LimitInfoProgressBar
+            spentPercent={spentPercent()}
+            isLimitFinished={isLimitFinished()}
+          />
           <Row className='small-font text-dark'>
             <Col sm={4} className='text-left'>
-              {durationCaption()}
+              {`Days passed: ${limit.info.duration_past} / ${limit.info.duration_length}`}
             </Col>
-            <Col sm={4} className='base-font text-wrap'>
-              {savingRateCaption() + ' '}
-              {limit.info.saving_rate === 'good' ? (
-                <i className='far fa-smile-beam text-success' />
-              ) : spentPercent() > 100 ? (
-                <i className='far fa-angry text-danger' />
-              ) : (
-                <i className='far fa-frown text-warning' />
-              )}
-            </Col>
+            <LimitInfoSavingRateCaption
+              spentPercent={spentPercent()}
+              savings={limit.planned_amount - limit.info.spent_amount}
+              isSavingRateGood={limit.info.saving_rate === 'good'}
+              isLimitFinished={isLimitFinished()}
+            />
             <Col sm={4} className='text-right'>
               total spending {spentPercent()}%
             </Col>

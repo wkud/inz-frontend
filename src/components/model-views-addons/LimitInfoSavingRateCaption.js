@@ -8,10 +8,10 @@ const LimitInfoSavingRateCaption = ({
   isLimitFinished,
 }) => {
   const savingRateCaption = () =>
-    isLimitFinished
-      ? isSavingRateGood
-        ? `You saved ${savings}zł!`
-        : "You've exceeded the limit."
+    spentPercent > 100
+      ? "You've exceeded the limit."
+      : isLimitFinished && isSavingRateGood
+      ? `You saved ${savings}zł!`
       : isSavingRateGood
       ? 'Good job - keep saving!'
       : "You're spending too much!";

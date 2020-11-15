@@ -4,7 +4,7 @@ import ToggleCheckbox from '../general/ToggleCheckbox';
 import Limit from '../model_items/Limit';
 
 const LimitSection = ({ headerCaption, limitList, rateVisible, toggleId }) => {
-  const [visible, setVisible] = useState(limitList.length !== 0);
+  const [visible, setVisible] = useState(true);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ProgressBar } from 'react-bootstrap';
 
-const LimitInfoProgressBar = ({spentPercent, isLimitFinished}) => {
+const LimitInfoProgressBar = ({ spentPercent, isLimitFinished }) => {
   return (
     <div className='pt-2'>
       <ProgressBar>
@@ -15,7 +15,13 @@ const LimitInfoProgressBar = ({spentPercent, isLimitFinished}) => {
               : 'primary'
           }
           animated
-          label={`spent ${spentPercent}%`}
+          label={
+            spentPercent > 10
+              ? `spent ${spentPercent}%`
+              : spentPercent > 5
+              ? `${spentPercent}%`
+              : ''
+          }
           now={spentPercent}
         />
       </ProgressBar>

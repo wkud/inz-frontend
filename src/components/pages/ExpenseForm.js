@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Form, Button, Row, Col, InputGroup } from 'react-bootstrap';
 import { ExpenseContext } from '../../context/ExpenseContext';
+import { LimitContext } from '../../context/LimitContext';
 import { CategoryContext } from '../../context/CategoryContext';
 import ModelFormHeader from '../common-for-models/ModelFormHeader';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
@@ -9,6 +10,7 @@ import { todayInIsoFormat } from '../../utility/dateUtility';
 const ExpenseForm = () => {
   const expense = useContext(ExpenseContext);
   const category = useContext(CategoryContext);
+  const limit = useContext(LimitContext);
 
   const initialForm = {
     product_name: '',
@@ -23,6 +25,7 @@ const ExpenseForm = () => {
     e.preventDefault();
     if (e.target.checkValidity()) {
       expense.create(formData);
+      limit.getAll(); //update limit info (spent amount)
       console.log(formData);
       setFormData(initialForm);
     } else {

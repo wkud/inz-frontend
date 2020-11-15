@@ -18,6 +18,7 @@ const Navigation = ({ logo }) => {
             <Nav.Link href='#expense/list'>Expenses</Nav.Link>
             <Nav.Link href='#category/list'>Categories</Nav.Link>
             <Nav.Link href='#limit/list'>Limits</Nav.Link>
+            <Nav.Link href='#analysis'>Analysis</Nav.Link>
           </>
         )}
       </Nav>

@@ -6,7 +6,7 @@ const Expense = ({ expense }) => {
   return (
     <>
       <ListGroup.Item>
-        <Row className='d-flex flex-row justify-content-between text-nowrap'>
+        <Row className='d-flex flex-row justify-content-between'>
           <Col xs={6} sm={3} className='text-left'>
             {fistCharacterUpperCase(expense.product_name)}
           </Col>
@@ -20,7 +20,7 @@ const Expense = ({ expense }) => {
           <Col
             xs={6}
             sm={3}
-            className='text-secondary text-left text-sm-center'
+            className='text-secondary text-left text-sm-center text-nowrap'
           >
             {expense.date}
           </Col>

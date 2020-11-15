@@ -1,140 +1,172 @@
 import React, { createContext, useState } from 'react';
 import inzApi from '../apis/inzApi';
+import { spentPercent } from '../utility/limitUtility';
 
-const dummyData = [
-  {
-    id: 2,
-    duration_start: '2020-07-10',
-    duration_end: '2020-07-31',
-    planned_amount: 500,
-    category_id: 3,
-    category_name: 'food',
-    info: {
-      saving_rate: 'good',
-      spent_amount: 100,
-      duration_past: 22,
-      duration_length: 22,
+const dummyData = {
+  current: [
+    {
+      id: 4,
+      duration_start: '2020-11-01',
+      duration_end: '2020-11-30',
+      planned_amount: 100,
+      category_id: 4,
+      category_name: 'travel',
+      info: {
+        saving_rate: 'bad',
+        spent_amount: 60,
+        duration_past: 13,
+        duration_length: 30,
+        duration_category: 'current',
+      },
     },
-  },
-  {
-    id: 3,
-    duration_start: '2020-10-01',
-    duration_end: '2020-10-30',
-    planned_amount: 99,
-    category_id: 3,
-    category_name: 'food',
-    info: {
-      saving_rate: 'bad',
-      spent_amount: 122,
-      duration_past: 30,
-      duration_length: 30,
+    {
+      id: 7,
+      duration_start: '2020-11-09',
+      duration_end: '2020-11-15',
+      planned_amount: 50,
+      category_id: 5,
+      category_name: 'Party',
+      info: {
+        saving_rate: 'good',
+        spent_amount: 0,
+        duration_past: 5,
+        duration_length: 7,
+        duration_category: 'current',
+      },
     },
-  },
-  {
-    id: 4,
-    duration_start: '2020-11-01',
-    duration_end: '2020-11-30',
-    planned_amount: 100,
-    category_id: 4,
-    category_name: 'travel',
-    info: {
-      saving_rate: 'bad',
-      spent_amount: 60,
-      duration_past: 12,
-      duration_length: 30,
+    {
+      id: 5,
+      duration_start: '2020-11-01',
+      duration_end: '2020-11-30',
+      planned_amount: 100,
+      category_id: 6,
+      category_name: 'Sport',
+      info: {
+        saving_rate: 'good',
+        spent_amount: 0,
+        duration_past: 13,
+        duration_length: 30,
+        duration_category: 'current',
+      },
     },
-  },
-  {
-    id: 8,
-    duration_start: '2020-11-14',
-    duration_end: '2020-11-14',
-    planned_amount: 200,
-    category_id: 4,
-    category_name: 'travel',
-    info: {
-      saving_rate: 'bad',
-      spent_amount: 60,
-      duration_past: 0,
-      duration_length: 1,
+    {
+      id: 6,
+      duration_start: '2020-11-01',
+      duration_end: '2020-11-30',
+      planned_amount: 100,
+      category_id: 6,
+      category_name: 'Sport',
+      info: {
+        saving_rate: 'good',
+        spent_amount: 0,
+        duration_past: 13,
+        duration_length: 30,
+        duration_category: 'current',
+      },
     },
-  },
-  {
-    id: 7,
-    duration_start: '2020-11-09',
-    duration_end: '2020-11-15',
-    planned_amount: 50,
-    category_id: 5,
-    category_name: 'Party',
-    info: {
-      saving_rate: 'good',
-      spent_amount: 0,
-      duration_past: 4,
-      duration_length: 7,
+    {
+      id: 9,
+      duration_start: '2020-11-01',
+      duration_end: '2020-11-30',
+      planned_amount: 400,
+      category_id: 7,
+      category_name: 'Dinner',
+      info: {
+        saving_rate: 'good',
+        spent_amount: 0,
+        duration_past: 13,
+        duration_length: 30,
+        duration_category: 'current',
+      },
     },
-  },
-  {
-    id: 5,
-    duration_start: '2020-11-01',
-    duration_end: '2020-11-30',
-    planned_amount: 100,
-    category_id: 6,
-    category_name: 'Sport',
-    info: {
-      saving_rate: 'good',
-      spent_amount: 0,
-      duration_past: 12,
-      duration_length: 30,
+  ],
+  upcoming: [
+    // {
+    //   id: 8,
+    //   duration_start: '2020-11-14',
+    //   duration_end: '2020-11-14',
+    //   planned_amount: 200,
+    //   category_id: 4,
+    //   category_name: 'travel',
+    //   info: {
+    //     saving_rate: 'bad',
+    //     spent_amount: 60,
+    //     duration_past: 0,
+    //     duration_length: 1,
+    //     duration_category: 'upcoming',
+    //   },
+    // },
+  ],
+  finished: [
+    {
+      id: 2,
+      duration_start: '2020-07-10',
+      duration_end: '2020-07-31',
+      planned_amount: 500,
+      category_id: 3,
+      category_name: 'food',
+      info: {
+        saving_rate: 'good',
+        spent_amount: 0,
+        duration_past: 22,
+        duration_length: 22,
+        duration_category: 'finished',
+      },
     },
-  },
-  {
-    id: 6,
-    duration_start: '2020-11-01',
-    duration_end: '2020-11-30',
-    planned_amount: 100,
-    category_id: 6,
-    category_name: 'Sport',
-    info: {
-      saving_rate: 'good',
-      spent_amount: 0,
-      duration_past: 12,
-      duration_length: 30,
+    {
+      id: 3,
+      duration_start: '2020-10-01',
+      duration_end: '2020-10-30',
+      planned_amount: 99,
+      category_id: 3,
+      category_name: 'food',
+      info: {
+        saving_rate: 'bad',
+        spent_amount: 122,
+        duration_past: 30,
+        duration_length: 30,
+        duration_category: 'finished',
+      },
     },
-  },
-  // {
-  //   id: 7,
-  //   duration_start: '2020-11-01',
-  //   duration_end: '2020-11-30',
-  //   planned_amount: 100,
-  //   category_id: 6,
-  //   category_name: 'Sport',
-  //   info: {
-  //     saving_rate: 'good',
-  //     spent_amount: 0,
-  //     duration_past: 12,
-  //     duration_length: 30,
-  //   },
-  // },
-];
+  ],
+};
 
 export const LimitContext = createContext();
 
 export const LimitProvider = (props) => {
   const [state, setState] = useState({
-    list: [],
+    current: [],
+    upcoming: [],
+    finished: [],
     loading: false,
     errorMessage: '',
     isApiListEmpty: false,
   });
 
+  const sortBySpendingPercent = (list) =>
+    list.sort((l1, l2) => spentPercent(l2) - spentPercent(l1));
+
   const clearFlags = () =>
     setState({ ...state, errorMessage: '', isApiListEmpty: false });
+
+  const isLocalListEmpty = () =>
+    Math.max(
+      state.current.length,
+      state.upcoming.length,
+      state.finished.length
+    ) === 0;
 
   const getAll = () => {
     if (state.loading) return;
     if (state.errorMessage) return;
     if (state.isApiListEmpty) return;
 
-    setState({ ...state, list: dummyData }); //TODO sort by duration_end (late first)
+    setState({
+      ...state,
+      current: sortBySpendingPercent(dummyData.current),
+      upcoming: sortBySpendingPercent(dummyData.upcoming),
+      finished: sortBySpendingPercent(dummyData.finished),
+    }); //TODO sort by duration_end (late first)
     return;
 
     // setState({ ...state, loading: true });
@@ -183,7 +215,9 @@ export const LimitProvider = (props) => {
   };
 
   return (
-    <LimitContext.Provider value={{ ...state, clearFlags, getAll, create }}>
+    <LimitContext.Provider
+      value={{ ...state, clearFlags, getAll, create, isLocalListEmpty }}
+    >
       {props.children}
     </LimitContext.Provider>
   );

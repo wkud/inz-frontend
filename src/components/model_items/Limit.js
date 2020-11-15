@@ -4,12 +4,11 @@ import { fistCharacterUpperCase } from '../../utility/stringUtility';
 import LimitDuration from '../model-views-addons/LimitDuration';
 import LimitInfoProgressBar from '../model-views-addons/LimitInfoProgressBar';
 import LimitInfoSavingRateCaption from '../model-views-addons/LimitInfoSavingRateCaption';
+import { spentPercent } from '../../utility/limitUtility';
 
 const Limit = ({ limit, rateVisible }) => {
   const isLimitFinished = () =>
     limit.info.duration_past >= limit.info.duration_length;
-  const spentPercent = () =>
-    Math.floor((limit.info.spent_amount / limit.planned_amount) * 100);
 
   return (
     <ListGroup.Item>
@@ -34,7 +33,7 @@ const Limit = ({ limit, rateVisible }) => {
       {rateVisible && (
         <>
           <LimitInfoProgressBar
-            spentPercent={spentPercent()}
+            spentPercent={spentPercent(limit)}
             isLimitFinished={isLimitFinished()}
           />
           <Row className='small-font text-dark'>
@@ -42,13 +41,13 @@ const Limit = ({ limit, rateVisible }) => {
               {`Days passed: ${limit.info.duration_past} / ${limit.info.duration_length}`}
             </Col>
             <LimitInfoSavingRateCaption
-              spentPercent={spentPercent()}
+              spentPercent={spentPercent(limit)}
               savings={limit.planned_amount - limit.info.spent_amount}
               isSavingRateGood={limit.info.saving_rate === 'good'}
               isLimitFinished={isLimitFinished()}
             />
             <Col sm={4} className='text-right'>
-              total spending {spentPercent()}%
+              total spending {spentPercent(limit)}%
             </Col>
           </Row>
         </>

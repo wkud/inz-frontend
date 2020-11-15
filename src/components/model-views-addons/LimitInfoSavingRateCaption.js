@@ -14,7 +14,7 @@ const LimitInfoSavingRateCaption = ({
         : "You've exceeded the limit."
       : isSavingRateGood
       ? 'Good job - keep saving!'
-      : "You're spending fast!";
+      : "You're spending too much!";
 
   const iconClassName = () =>
     isSavingRateGood

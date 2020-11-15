@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { LimitContext } from '../../context/LimitContext';
 import { ListGroup, Button } from 'react-bootstrap';
-import Limit from '../model_items/Limit';
 import ModelListHeader from '../common-for-models/ModelListHeader';
-import LimitInfoToggleCheckbox from '../model-views-addons/LimitInfoToggleCheckbox';
+import LimitSection from '../model-views-addons/LimitSection';
+import ToggleCheckbox from '../general/ToggleCheckbox';
 
 const LimitList = () => {
   const limit = useContext(LimitContext);
 
   const getLimits = () => {
-    if (limit.list.length === 0) limit.getAll();
+    if (limit.isLocalListEmpty()) limit.getAll();
   };
   useEffect(() => getLimits());
 
@@ -31,27 +31,48 @@ const LimitList = () => {
   return (
     <div className='d-flex flex-column align-items-center'>
       <ModelListHeader syncAction={syncLimits} headerCaption='Limits'>
-        <LimitInfoToggleCheckbox
-          className='d-none d-sm-block px-3'
+        <ToggleCheckbox
+          clsName='d-none d-sm-block px-3'
           checked={rateVisible}
           onChange={onShowRateChange}
-        />
+          label='Show saving rate'
+          id='showSavingRateToggle'
+          />
       </ModelListHeader>
       <div className='d-flex d-sm-none justify-content-start model-view'>
-        <LimitInfoToggleCheckbox
-          className='px-2'
+        <ToggleCheckbox
+          clsName='px-2'
           checked={rateVisible}
           onChange={onShowRateChange}
-        />
+          label='Show saving rate'
+          id='showSavingRateToggle'
+          />
       </div>
       <ListGroup className='model-view scroll'>
-        <div className='p-0'>
-          {limit.list.length === 0 ? (
+        <div className='p-0 pb-1'>
+          {limit.isLocalListEmpty() ? (
             <ListGroup.Item>{noItemsCaption()}</ListGroup.Item>
           ) : (
-            limit.list.map((limit) => (
-              <Limit limit={limit} key={limit.id} rateVisible={rateVisible} />
-            ))
+            <>
+              <LimitSection
+                headerCaption='Current limits'
+                limitList={limit.current}
+                rateVisible={rateVisible}
+                toggleId='currentLimitsToggle'
+              />
+              <LimitSection
+                headerCaption='Upcoming limits'
+                limitList={limit.upcoming}
+                rateVisible={rateVisible}
+                toggleId='upcomingLimitsToggle'
+              />
+              <LimitSection
+                headerCaption='Finished limits'
+                limitList={limit.finished}
+                rateVisible={rateVisible}
+                toggleId='finishedLimitsToggle'
+              />
+            </>
           )}
         </div>
       </ListGroup>

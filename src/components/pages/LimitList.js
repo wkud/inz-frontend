@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { LimitContext } from '../../context/LimitContext';
 import { ListGroup, Button } from 'react-bootstrap';
 import ModelListHeader from '../common-for-models/ModelListHeader';
-import LimitSection from '../model-views-addons/LimitSection';
+import LimitSection from '../limit_page_addons/LimitSection';
 import ToggleCheckbox from '../general/ToggleCheckbox';
 
 const LimitList = () => {

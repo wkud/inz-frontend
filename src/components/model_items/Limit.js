@@ -1,9 +1,9 @@
 import React from 'react';
 import { ListGroup, Row, Col } from 'react-bootstrap';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
-import LimitDuration from '../model-views-addons/LimitDuration';
-import LimitInfoProgressBar from '../model-views-addons/LimitInfoProgressBar';
-import LimitInfoSavingRateCaption from '../model-views-addons/LimitInfoSavingRateCaption';
+import LimitDuration from '../limit_page_addons/LimitDuration';
+import LimitInfoProgressBar from '../limit_page_addons/LimitInfoProgressBar';
+import LimitInfoSavingRateCaption from '../limit_page_addons/LimitInfoSavingRateCaption';
 import { spentPercent } from '../../utility/limitUtility';
 
 const Limit = ({ limit, rateVisible }) => {

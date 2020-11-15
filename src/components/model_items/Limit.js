@@ -7,9 +7,8 @@ import LimitInfoSavingRateCaption from '../model-views-addons/LimitInfoSavingRat
 import { spentPercent } from '../../utility/limitUtility';
 
 const Limit = ({ limit, rateVisible }) => {
-  const isLimitFinished = () =>
-    limit.info.duration_past >= limit.info.duration_length;
-
+  const isLimitFinished = () => limit.info.duration_category === 'finished';
+  
   return (
     <ListGroup.Item>
       <Row className='d-flex flex-row justify-content-between'>

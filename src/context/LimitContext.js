@@ -65,17 +65,22 @@ export const LimitProvider = (props) => {
       .post('limit', newLimitData)
       .then((res) => {
         console.log(res.data);
+        const newLimit = {
+          ...newLimitData,
+          id: res.data.id,
+          category_name: res.data.category_name,
+          info: res.data.info,
+        };
+        const updatedList =
+          newLimit.info.duration_category === 'current'
+            ? { current: [...state.current, newLimit] }
+            : newLimit.info.duration_category === 'upcoming'
+            ? { upcoming: [...state.upcoming, newLimit] }
+            : { finished: [...state.finished, newLimit] };
         setState({
           ...state,
           loading: false,
-          list: [
-            ...state.list,
-            {
-              ...newLimitData,
-              id: res.data.id,
-              category_name: res.data.category_name, //TODO get 'info' field in response
-            },
-          ],
+          ...updatedList,
         });
       })
       .catch((err) => {

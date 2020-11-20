@@ -1,5 +1,7 @@
 import React, { createContext, useState } from 'react';
 import inzApi from '../apis/inzApi';
+import chartOverflowOthers from '../utility/chartUtility/chartOverflowOthers';
+import { round } from '../utility/numberUtility';
 
 export const AnalysisContext = createContext();
 
@@ -59,16 +61,34 @@ export const AnalysisProvider = (props) => {
     list: [],
     loading: false,
     errorMessage: '',
-    totalSpending: 0,
     isApiSpendingZero: false,
+    totalSpending: 0,
     categoryData: [],
+    values: [],
+    labels: [],
+    bgColors: [],
   });
 
-  const clearFlags = () => setState({ ...state, errorMessage: '' });
+  const clearFlags = () => setState({ ...state, errorMessage: '', isApiSpendingZero: false, });
 
   const sortBySpentPercent = (list) =>
     list.sort(
       (catData1, catData2) => catData2.spent_percent - catData1.spent_percent
+    );
+
+  const dataWithOverlow = (totalSpending, categoryData) =>
+    chartOverflowOthers(
+      8,
+      categoryData,
+      (cat) => cat.spent_amount,
+      (label, value) => {
+        return {
+          spent_amount: value,
+          category_name: label,
+          spent_percent:
+            totalSpending === 0 ? 0 : round((value / totalSpending) * 100, 2),
+        };
+      }
     );
 
   const getAnalysis = () => {
@@ -76,11 +96,15 @@ export const AnalysisProvider = (props) => {
     if (state.errorMessage) return;
     if (state.isApiSpendingZero) return;
 
+    const withOverflow = dataWithOverlow(
+      dummyData.total_spending,
+      sortBySpentPercent(dummyData.categories)
+    );
     setState({
       ...state,
       totalSpending: dummyData.total_spending,
-      categoryData: sortBySpentPercent(dummyData.categories),
-      isApiListEmpty: dummyData.total_spending === 0,
+      categoryData: withOverflow,
+      isApiSpendingZero: dummyData.total_spending === 0,
     });
 
     // setState({ ...state, loading: true });
@@ -88,11 +112,15 @@ export const AnalysisProvider = (props) => {
     // inzApi()
     //   .get('category/analysis')
     //   .then((res) => {
+    //      const withOverflow = dataWithOverlow(
+    //        res.data.analysis.total_spending,
+    //        sortBySpentPercent(res.data.analysis.categories)
+    //      );
     //     setState({
     //       ...state,
     //       loading: false,
     //       totalSpending: res.data.analysis.total_spending,
-    //       categoryData: sortBySpentPercent(res.data.analysis.categories),
+    //       categoryData: withOverflow,
     //       isApiListEmpty: res.data.analysis.total_spending === 0,
     //     });
     //   })

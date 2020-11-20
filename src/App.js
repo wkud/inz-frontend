@@ -4,6 +4,7 @@ import { UserProvider } from './context/UserContext';
 import { ExpenseProvider } from './context/ExpenseContext';
 import { CategoryProvider } from './context/CategoryContext';
 import { LimitProvider } from './context/LimitContext';
+import { AnalysisProvider } from './context/AnalysisContext';
 import Credits from './components/Credits';
 import Navigation from './components/Navigation';
 import Home from './components/pages/Home';
@@ -38,7 +39,9 @@ function App() {
                     />
                     <Route exact path='/limit/list' component={LimitList} />
                     <Route exact path='/limit/form' component={LimitForm} />
-                    <Route exact path='/analysis' component={Analysis} />
+                    <AnalysisProvider>
+                      <Route exact path='/analysis' component={Analysis} />
+                    </AnalysisProvider>
                     <Route component={Home} />
                   </Switch>
                 </Suspense>

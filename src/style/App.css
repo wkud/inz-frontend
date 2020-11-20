@@ -31,23 +31,22 @@
   font-size: 0.8rem;
   font-weight: 300;
 }
-.small-font{
+.small-font {
   font-size: 0.8rem;
 }
-.xs-font{
+.xs-font {
   font-size: 0.6rem;
 }
 .lead-font {
   font-weight: 300;
 }
-.base-font{
+.base-font {
   font-size: 1rem;
 }
-.progress-bar-font{
+.progress-bar-font {
   font-size: 0.8rem;
   font-weight: 600;
 }
-
 
 .model-view {
   width: calc(min(max(45vw, 515px), 75vw));
@@ -56,4 +55,9 @@
   max-height: 60vh;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.chart{
+  width: 80vw;
+  height: 60vh;
 }

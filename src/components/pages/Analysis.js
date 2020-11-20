@@ -3,39 +3,37 @@ import { Pie } from 'react-chartjs-2';
 import { AnalysisContext } from '../../context/AnalysisContext';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
 import chartColorPalette from '../analysis_page_addons/chartColorPalette';
+import chartOverflowOthers from '../analysis_page_addons/chartOverflowOthers';
+import { round } from '../../utility/numberUtility';
 
 const Analysis = () => {
   const analysis = useContext(AnalysisContext);
 
   const getAnalysis = () => {
-    console.log('get');
     if (analysis.totalSpending === 0) analysis.getAnalysis();
-    console.log(values());
-    console.log(labels());
-    console.log(bgColors());
+    values(); //TODO remove
   };
   useEffect(() => getAnalysis());
 
-  const analysisData = () => analysis.categoryData;
+  //TODO ERROR dont use this if total spending === 0 (divide by 0)
+  const analysisData = () =>
+    chartOverflowOthers(
+      8,
+      analysis.categoryData,
+      (cat) => cat.spent_amount,
+      (label, value) => {
+        return {
+          spent_amount: value,
+          category_name: label,
+          spent_percent: round((value / analysis.totalSpending) * 100, 2),
+        };
+      }
+    );
 
   const values = () => analysisData().map((cat) => cat.spent_amount);
   const labels = () =>
-  analysisData().map((cat) =>
-      fistCharacterUpperCase(cat.category_name)
-    );
+    analysisData().map((cat) => fistCharacterUpperCase(cat.category_name));
   const bgColors = () => chartColorPalette(analysisData().length);
-
-  // const labels = () => {
-  //   chartOverflowOthers(
-  //     8,
-  //     'category_name',
-  //     'spent_amount',
-  //     analysis.categoryData.map((catData) =>
-  //       fistCharacterUpperCase(catData.category_name)
-  //     )
-  //   );
-  // };
-  // const data = analysis.
 
   const chartReference = React.createRef();
   useEffect(() => console.log(chartReference));
@@ -43,19 +41,13 @@ const Analysis = () => {
   var data = {
     datasets: [
       {
-        data: [10, 10, 415, 10, 310], //TODO replace
+        data: values(), //TODO replace
         borderColor: '#222222',
-        backgroundColor: [
-          '#2f4b7c',
-          '#665191',
-          '#a05195',
-          '#d45087',
-          '#f95d6a',
-        ], //TODO replace
+        backgroundColor: bgColors(), //TODO replace
         label: 'Dataset 1',
       },
     ],
-    labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'], //TODO replace
+    labels: labels(), //TODO replace
   };
   const options = {
     responsive: true,

@@ -37,12 +37,17 @@ const dummyData = {
       spent_percent: 0.74,
     },
     {
-      category_name: 'no category',
+      category_name: 'no category2',
       spent_amount: 2,
       spent_percent: 0.74,
     },
     {
-      category_name: 'no category',
+      category_name: 'no category3',
+      spent_amount: 2,
+      spent_percent: 0.74,
+    },
+    {
+      category_name: 'no category4',
       spent_amount: 2,
       spent_percent: 0.74,
     },

@@ -18,8 +18,7 @@ const Analysis = () => {
     <div className='align-self-center align-items-center'>
       <AnalysisHeader syncAction={getAnalysis} headerCaption='Analysis' />
       <span className='text-left d-flex mid-font pb-1 text-wrap'>
-        Enter start and end date of period, you want to{' '}
-        <strong className='px-2 text-primary'>analyze</strong>
+        Enter start and end date of period, you want to analyze
       </span>
       <AnalysisPeriodForm />
       <span className='text-center text-dark lead-font pb-1'>

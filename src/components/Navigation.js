@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
-
+import { GraphIcon } from '@primer/octicons-react';
 const Navigation = ({ logo }) => {
   const { email, logout } = useContext(UserContext);
 
   return (
     <Navbar bg='dark' variant='dark'>
       <Navbar.Brand href='#home'>
-        <img src={logo} alt='Logo' className='mid-font-img' />
-        <span className='pl-2'>Penny</span>
+        <GraphIcon size={24} className='text-primary'/>
+        <span className='pl-2'>Fund Planner</span>
       </Navbar.Brand>
       <Nav className='mr-auto'>
         <Nav.Link href='#home'>Home</Nav.Link>

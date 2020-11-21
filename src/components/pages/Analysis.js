@@ -3,6 +3,7 @@ import { Pie } from 'react-chartjs-2';
 import { AnalysisContext } from '../../context/AnalysisContext';
 import chartColorPalette from '../../utility/chartUtility/chartColorPalette';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
+// import { Parser as HtmlToReactParser } from 'html-to-react';
 
 const Analysis = () => {
   const analysis = useContext(AnalysisContext);
@@ -13,6 +14,17 @@ const Analysis = () => {
     }
   };
   useEffect(() => getAnalysis());
+
+  // const chartReference = React.createRef();
+  // useEffect(() => {
+  //   console.log(chartReference);
+  //   if (!!chartReference) {
+  //     console.log(chartReference.current.chartInstance);
+  //     chartReference.current.chartInstance.generateLegend();
+  //   }
+  // });
+
+  // const htmlParser = new HtmlToReactParser();
 
   const values = () => analysis.categoryData.map((cat) => cat.spent_amount);
   const labels = () =>
@@ -40,8 +52,8 @@ const Analysis = () => {
         display: false,
       },
       legend: {
-        position: isSmall ? 'bottom' : 'right', //TODO 'bottom' on xs
-        align: isSmall ? 'start' : 'center', //TODO 'start' on xs
+        position: isSmall ? 'bottom' : 'right',
+        align: isSmall ? 'start' : 'center',
         labels: {
           fontColor: '#ffffff',
         },
@@ -54,15 +66,48 @@ const Analysis = () => {
           },
         },
       },
+      // legendCallback: (chart) => {
+      //   const renderLabels = (chart) => {
+      //     const { data } = chart;
+      //     return data.datasets[0].data
+      //       .map(
+      //         (_, i) =>
+      //           `<div>
+      //               <div id="legend-${i}-item" class="legend-item">
+      //                 <span style="background-color:
+      //                   ${data.datasets[0].backgroundColor[i]}">
+      //                   &nbsp;&nbsp;&nbsp;&nbsp;
+      //                 </span>
+      //                 ${
+      //                   data.labels[i] &&
+      //                   `<span class="label">${data.labels[i]}: $${data.datasets[0].data[i]}</span>`
+      //                 }
+      //               </div>
+      //           </div>
+      //         `
+      //       )
+      //       .join('');
+      //   };
+      //   return `
+      //     <div class="chartjs-legend d-flex flex-column">
+      //       ${renderLabels(chart)}
+      //     </div>`;
+      // },
     };
   };
   return (
     <>
       <div className='chart align-self-center d-none d-md-block'>
         <Pie data={data} options={options(false)} />
+        {/* <Pie data={data} options={options(false)} ref={chartReference} /> */}
       </div>
       <div className='chart align-self-center d-md-none'>
         <Pie data={data} options={options(true)} />
+        {/* <Pie data={data} options={options(true)} ref={chartReference} /> */}
+        {/* {!!chartReference.current &&
+          htmlParser.parse(
+            chartReference.current.chartInstance.generateLegend()
+          )} */}
       </div>
     </>
   );

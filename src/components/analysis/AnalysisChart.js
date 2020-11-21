@@ -3,13 +3,10 @@ import { Pie } from 'react-chartjs-2';
 import chartColorPalette from '../../utility/chartUtility/chartColorPalette';
 import { fistCharacterUpperCase } from '../../utility/stringUtility';
 
-const Analysis = ({categoryData}) => {
-
+const Analysis = ({ categoryData }) => {
   const values = () => categoryData.map((cat) => cat.spent_amount);
   const labels = () =>
-    categoryData.map((cat) =>
-      fistCharacterUpperCase(cat.category_name)
-    );
+    categoryData.map((cat) => fistCharacterUpperCase(cat.category_name));
   const bgColors = () => chartColorPalette(categoryData.length);
 
   var data = {
@@ -31,8 +28,9 @@ const Analysis = ({categoryData}) => {
         display: false,
       },
       legend: {
-        position: isSmall ? 'bottom' : 'right',
-        align: isSmall ? 'start' : 'center',
+        display: !isSmall,
+        position: 'right',
+        align: 'center',
         labels: {
           fontColor: '#ffffff',
         },

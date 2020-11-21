@@ -14,9 +14,6 @@ const Analysis = () => {
   };
   useEffect(() => getAnalysis());
 
-  const chartReference = React.createRef();
-  useEffect(() => console.log(chartReference));
-
   const values = () => analysis.categoryData.map((cat) => cat.spent_amount);
   const labels = () =>
     analysis.categoryData.map((cat) =>
@@ -35,30 +32,39 @@ const Analysis = () => {
     ],
     labels: labels(),
   };
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    title: {
-      display: false,
-      // display: true,
-      // text: 'Spending per category',
-      // fontColor: '#ffffff',
-      // fontSize: 13,
-      // fontStyle: 'normal',
-      // position: 'bottom',
-    },
-    legend: {
-      position: 'right', //TODO 'bottom' on xs
-      align: 'center', //TODO 'start' on xs
-      labels: {
-        fontColor: '#ffffff',
+  const options = (isSmall) => {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      title: {
+        display: false,
       },
-    },
+      legend: {
+        position: isSmall ? 'bottom' : 'right', //TODO 'bottom' on xs
+        align: isSmall ? 'start' : 'center', //TODO 'start' on xs
+        labels: {
+          fontColor: '#ffffff',
+        },
+      },
+      tooltips: {
+        callbacks: {
+          label: (tooltipItem, data) => {
+            const i = tooltipItem.index;
+            return `${data.labels[i]}: ${analysis.categoryData[i].spent_percent}%, ${data.datasets[0].data[i]}zł`;
+          },
+        },
+      },
+    };
   };
   return (
-    <div className='chart align-self-center'>
-      <Pie ref={chartReference} data={data} options={options} />
-    </div>
+    <>
+      <div className='chart align-self-center d-none d-md-block'>
+        <Pie data={data} options={options(false)} />
+      </div>
+      <div className='chart align-self-center d-md-none'>
+        <Pie data={data} options={options(true)} />
+      </div>
+    </>
   );
 };
 

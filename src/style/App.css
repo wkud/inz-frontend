@@ -58,6 +58,6 @@
 }
 
 .chart{
-  width: 60vw;
+  width: calc(max(min(60vw, 575px), 90vw));
   height: 60vh;
 }

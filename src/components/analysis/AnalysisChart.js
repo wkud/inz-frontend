@@ -46,14 +46,14 @@ const Analysis = ({ categoryData }) => {
     };
   };
   return (
-    <>
-      <div className='chart align-self-center d-none d-md-block'>
+    <div className='align-self-center'>
+      <div className='chart d-none d-md-block'>
         <Pie data={data} options={options(false)} />
       </div>
-      <div className='chart align-self-center d-md-none'>
+      <div className='chart d-md-none'>
         <Pie data={data} options={options(true)} />
       </div>
-    </>
+    </div>
   );
 };
 

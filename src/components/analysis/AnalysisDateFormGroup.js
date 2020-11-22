@@ -1,13 +1,12 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 
-const AnalysisDateFormGroup = ({ id, placeholder, value, onChange }) => {
+const AnalysisDateFormGroup = ({ id, label, value, onChange }) => {
   return (
-    <Form.Group controlId={id} className='m-md-0'>
-      {/* <Form.Label>End date</Form.Label> */}
+    <Form.Group controlId={id} className='mb-2 m-md-0'>
+      <Form.Label>{label}</Form.Label>
       <Form.Control
         type='date'
-        placeholder={placeholder}
         required
         value={value}
         onChange={onChange}

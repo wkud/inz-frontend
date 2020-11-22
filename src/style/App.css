@@ -61,6 +61,9 @@
   width: calc(min(max(45vw, 515px), 75vw));
   height: 60vh;
 }
+.chart-width{
+  width: calc(min(max(45vw, 515px), 75vw));
+}
 .stretch-width {
   width: 100%;
 }

@@ -15,15 +15,13 @@ const Analysis = () => {
   useEffect(() => getAnalysis());
 
   return (
-    <div className='align-self-center align-items-center'>
-      <AnalysisHeader syncAction={getAnalysis} headerCaption='Analysis' />
-      <span className='text-left d-flex mid-font pb-1 text-wrap'>
-        Enter start and end date of period, you want to analyze
-      </span>
-      <AnalysisPeriodForm />
-      <span className='text-center text-dark lead-font pb-1'>
-        Hover over the diagram to show additional information
-      </span>
+    <div className='align-self-center align-items-center chart-width'>
+        <AnalysisHeader syncAction={getAnalysis} headerCaption='Analysis' />
+        <AnalysisPeriodForm />
+        <span className='text-center text-dark lead-font d-md-none'>
+          Hover over the diagram to show additional information
+        </span>
+        <div className='pb-1 pb-md-2' />
       <AnalysisChart categoryData={analysis.categoryData} />
     </div>
   );

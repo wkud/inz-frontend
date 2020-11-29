@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { UserContext } from '../../context/UserContext';
+import AuthRequestInfo from './AuthRequestInfo';
 
 const Register = () => {
   const { register } = useContext(UserContext);
@@ -14,16 +15,14 @@ const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (
-      e.target.checkValidity() &&
-      credentials.password === credentials.confirmPassword
-    ) {
-      register(credentials.email, credentials.password);
-
+    if (e.target.checkValidity()) {
+      register(
+        credentials.email,
+        credentials.password,
+        credentials.confirmPassword
+      );
       setCredentials(credentialsInitialState);
-    } else {
-      console.log('invalid credentials');
-    }
+    } else console.log('invalid credentials');
   };
   return (
     <>
@@ -42,9 +41,6 @@ const Register = () => {
               setCredentials({ ...credentials, email: e.target.value })
             }
           />
-          <Form.Text className='text-muted'>
-            We'll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
 
         <Form.Group controlId='registerPassword'>
@@ -74,6 +70,7 @@ const Register = () => {
               })
             }
           />
+          <AuthRequestInfo />
         </Form.Group>
         <Button
           variant='primary'

@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <>
-      <p className='lead'>
+      <div className='lead'>
         {user.email ? (
           <>
             It's empty here. <br />
@@ -18,22 +18,29 @@ const Home = () => {
           </>
         ) : (
           <>
-            Welcome to the Penny. <br />
-            Sign in to continue or sign up if you don't have an account yet.
+            <h3 className='lead-font'>Welcome to the Fund Planner!</h3>
+            <p>Here you can plan and analyze your expenditure.</p>
+            <p className='mb-0 mt-3'>
+              Sign in to continue <br />
+              ...or sign up if you don't have an account yet.
+            </p>
           </>
         )}
-      </p>
-      {user.loading && <p>loading...</p>}
+      </div>
       {!user.email && (
         <div className='button-font align-self-center'>
-          <Tabs defaultActiveKey='home' id='auth-tabs'>
-            <Tab eventKey='home' title='Sign in'>
-              <div className='auth-section bg-highlight mid-font px-2'>
+          <Tabs
+            defaultActiveKey='login'
+            id='auth-tabs'
+            onSelect={() => user.clearFlags()}
+          >
+            <Tab eventKey='login' title='Sign in'>
+              <div className='auth-section border border-primary mid-font px-2'>
                 <Login />
               </div>
             </Tab>
-            <Tab eventKey='profile' title='Sign up'>
-              <div className='auth-section bg-highlight mid-font px-2'>
+            <Tab eventKey='register' title='Sign up'>
+              <div className='auth-section border border-primary mid-font px-2'>
                 <Register />
               </div>
             </Tab>

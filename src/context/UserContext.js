@@ -15,12 +15,23 @@ export const UserProvider = (props) => {
     email: localStorage.getItem('email'),
     loading: false,
     errorMessage: '',
+    successMessage: '',
   });
 
-  const resetError = () => setState({ ...state, errorMessage: '' });
+  const clearFlags = () =>
+    setState({ ...state, errorMessage: '', successMessage: '' });
 
-  const register = (email, password) => {
+  const register = (email, password, confirmPassword) => {
     setState({ ...state, loading: true });
+
+    if (password !== confirmPassword) {
+      setState({
+        ...state,
+        errorMessage: 'Entered passwords must be the same.',
+        successMessage: '',
+      });
+      return;
+    }
 
     inzApi()
       .post('register', {
@@ -28,11 +39,21 @@ export const UserProvider = (props) => {
         password: password,
       })
       .then((res) => {
-        setState({ ...state, loading: false });
+        setState({
+          ...state,
+          loading: false,
+          errorMessage: '',
+          successMessage: 'Account created. You can sign in now.',
+        });
       })
       .catch((err) => {
         console.log(err);
-        setState({ ...state, loading: false, errorMessage: err.message });
+        setState({
+          ...state,
+          loading: false,
+          errorMessage: 'Cannot sign up due to an error.',
+          successMessage: '',
+        });
       });
   };
 
@@ -45,8 +66,14 @@ export const UserProvider = (props) => {
         password: password,
       })
       .then((res) => {
-        resetError();
-        setState({ ...state, loading: false, email: email });
+        setState({
+          ...state,
+          loading: false,
+          email: email,
+          errorMessage: '',
+          successMessage:
+            'Credentials accepted. You are about to be redirected :)', //TODO: show this message in react-alert
+        });
         localStorage.setItem('email', email);
         localStorage.setItem('token', res.data.access_token);
         expense.clearFlags();
@@ -60,43 +87,21 @@ export const UserProvider = (props) => {
           ...state,
           loading: false,
           email: '',
-          errorMessage: err.message,
-        });
-      });
-  };
-
-  const getIdentity = async () => {
-    setState({ ...state, loading: true });
-    console.log('getting identity');
-
-    inzApi()
-      .get('identity')
-      .then((res) => {
-        setState({
-          ...state,
-          loading: false,
-          email: res.data.email,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        setState({
-          ...state,
-          loading: false,
-          errorMessage: err.message,
+          errorMessage: 'Cannot sign in due to an error.',
+          successMessage: '',
         });
       });
   };
 
   const logout = () => {
-    setState({ ...state, email: null });
+    setState({ ...state, email: null, errorMessage: '', successMessage: '' });
     localStorage.setItem('email', '');
     localStorage.setItem('token', '');
   };
 
   return (
     <UserContext.Provider
-      value={{...state, register, login, getIdentity, logout }}
+      value={{ ...state, register, login, logout, clearFlags }}
     >
       {props.children}
     </UserContext.Provider>

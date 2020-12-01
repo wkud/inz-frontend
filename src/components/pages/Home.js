@@ -9,13 +9,18 @@ const Home = () => {
 
   return (
     <>
-      <div className='lead'>
+      <div className='lead-font mid-font'>
         {user.email ? (
-          <>
-            It's empty here. <br />
-            Start by adding your expenses, creating your categories and plan by
-            setting a limit.
-          </>
+          <p>
+            <h3 className='lead-font'>Don't know how to start?</h3>
+            <>Enter your expenditure.</>
+            <br />
+            <>Create your categories.</>
+            <br />
+            <>Set a limit to track your spending.</>
+            <br />
+            <>See expenditure distribution with analysis tab.</>
+          </p>
         ) : (
           <>
             <h3 className='lead-font'>Welcome to the Fund Planner!</h3>

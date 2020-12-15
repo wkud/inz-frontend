@@ -12,7 +12,8 @@ export const UserProvider = (props) => {
   const limit = useContext(LimitContext);
 
   const [state, setState] = useState({
-    email: localStorage.getItem('email'),
+    // email: localStorage.getItem('email'),
+    email: '',
     loading: false,
     errorMessage: '',
     successMessage: '',
@@ -74,7 +75,7 @@ export const UserProvider = (props) => {
           successMessage:
             'Credentials accepted. You are about to be redirected :)', //TODO: show this message in react-alert
         });
-        localStorage.setItem('email', email);
+        // localStorage.setItem('email', email);
         localStorage.setItem('token', res.data.access_token);
         expense.clearFlags();
         category.clearFlags();
@@ -95,7 +96,7 @@ export const UserProvider = (props) => {
 
   const logout = () => {
     setState({ ...state, email: null, errorMessage: '', successMessage: '' });
-    localStorage.setItem('email', '');
+    // localStorage.setItem('email', '');
     localStorage.setItem('token', '');
   };
 

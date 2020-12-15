@@ -8,7 +8,7 @@ import { spentPercent } from '../../utility/limitUtility';
 
 const Limit = ({ limit, rateVisible }) => {
   const isLimitFinished = () => limit.info.duration_category === 'finished';
-  
+
   return (
     <ListGroup.Item>
       <Row className='d-flex flex-row justify-content-between'>
@@ -36,7 +36,7 @@ const Limit = ({ limit, rateVisible }) => {
             isLimitFinished={isLimitFinished()}
           />
           <Row className='small-font text-dark'>
-            <Col sm={4} className='text-left'>
+            <Col sm={3} className='text-left'>
               {`Days passed: ${limit.info.duration_past} / ${limit.info.duration_length}`}
             </Col>
             <LimitInfoSavingRateCaption
@@ -45,7 +45,7 @@ const Limit = ({ limit, rateVisible }) => {
               isSavingRateGood={limit.info.saving_rate === 'good'}
               isLimitFinished={isLimitFinished()}
             />
-            <Col sm={4} className='text-right'>
+            <Col sm={3} className='text-right'>
               total spending {spentPercent(limit)}%
             </Col>
           </Row>

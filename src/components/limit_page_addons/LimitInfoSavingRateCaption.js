@@ -24,7 +24,7 @@ const LimitInfoSavingRateCaption = ({
       : 'far fa-frown text-warning';
 
   return (
-    <Col sm={4} className='base-font text-wrap'>
+    <Col sm={6} className='base-font text-wrap'>
       {savingRateCaption() + ' '}
       <i className={iconClassName()} />
     </Col>
